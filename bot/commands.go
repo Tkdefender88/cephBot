@@ -12,6 +12,12 @@ var (
 	pingpong = command{"Ping", "\"Pong!\"", false, ping}.add()
 	pongping = command{"Pong", "\"Ping!\"", false, pong}.add()
 	help     = command{"Help", "", false, msgHelp}.add()
+
+	gitLink = command{
+		"git",
+		"displays the github link where I'm being developed",
+		false,
+		gitHubLink}.add()
 )
 
 //ParseCommand takes in a discord session and a discordgo Message and a message string
