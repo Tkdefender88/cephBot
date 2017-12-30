@@ -31,7 +31,7 @@ func Start() {
 
 	BotID = u.ID
 
-	goBot.AddHandler(pingPong)
+	goBot.AddHandler(messageCreate)
 	err = goBot.Open()
 	if err != nil {
 		fmt.Println(err.Error())
@@ -41,18 +41,12 @@ func Start() {
 	fmt.Println("Bot is running")
 }
 
-func pingPong(session *discordgo.Session, message *discordgo.MessageCreate) {
+func messageCreate(session *discordgo.Session, message *discordgo.MessageCreate) {
+	if message.Author.ID == BotID {
+		return
+	}
+
 	if strings.HasPrefix(message.Content, config.BotPrefix) {
-		if message.Author.ID == BotID {
-			return
-		}
-
-		if message.Content == config.BotPrefix+"ping" {
-			session.ChannelMessageSend(message.ChannelID, "Pong!")
-		}
-
-		if message.Content == config.BotPrefix+"pong" {
-			session.ChannelMessageSend(message.ChannelID, "Ping!")
-		}
+		parseCommand(session, message, strings.TrimPrefix(message.Content, config.BotPrefix))
 	}
 }
