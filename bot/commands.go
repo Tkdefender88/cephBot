@@ -11,6 +11,7 @@ var (
 
 	pingpong = command{"Ping", "\"Pong!\"", false, ping}.add()
 	pongping = command{"Pong", "\"Ping!\"", false, pong}.add()
+	help     = command{"Help", "", false, msgHelp}.add()
 )
 
 //ParseCommand takes in a discord session and a discordgo Message and a message string
@@ -44,6 +45,19 @@ type command struct {
 	Exec func(*discordgo.Session, *discordgo.MessageCreate, []string)
 }
 
+//Embeds a the help message of the command c calling the function
+func (c command) helpMessage(s *discordgo.Session, m *discordgo.MessageCreate) {
+	s.ChannelMessageSendEmbed(m.ChannelID, &discordgo.MessageEmbed{
+		Color: 0,
+
+		Fields: []*discordgo.MessageEmbedField{
+			{
+				Name:  c.Name,
+				Value: c.Help,
+			},
+		},
+	})
+}
 func (c command) add() command {
 	commandMap[toLower(c.Name)] = c
 	return c
