@@ -1,6 +1,6 @@
 # discordbot
 
-##Things I'll be adding sometime in the Future:
+## Things I'll be adding sometime in the Future:
 ------------------
   meme repository
   
