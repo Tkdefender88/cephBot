@@ -1,6 +1,6 @@
 # discordbot
   
-  A simple discord bot for use with me and my friends. I'm using this as a project to help me learn and practice the go programming language. Currently the bot can only do a few things I will continue to tacle the feature list below but between school and life I'm not sure how much time or how often this will be updated.
+  A simple discord bot for use with me and my friends. I'm using this as a project to help me learn and practice the go programming language. Currently the bot can only do a few things I will continue to tacle the feature list below but between school and life I'm not sure how much time or how often this will be updated. I will not be releasing a join link for the bot because I frankly don't have the infrastructure to support the bot on more servers than just the few I have with my friends but if you want you can build the bot on your own machine and run it for your own servers that way.
 
 ## Things I'll be adding sometime in the Future:
 
