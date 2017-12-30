@@ -10,4 +10,3 @@
   
   urban dictionary lookup
   
-  a link to this github repo
