@@ -7,12 +7,12 @@ import (
 	"github.com/bwmarrin/discordgo"
 )
 
-func pong(s *discordgo.Session, m *discordgo.MessageCreate, _ []string) {
-	s.ChannelMessageSend(m.ChannelID, "Ping!")
-}
-
-func ping(s *discordgo.Session, m *discordgo.MessageCreate, _ []string) {
-	s.ChannelMessageSend(m.ChannelID, "Pong!")
+func ping(s *discordgo.Session, m *discordgo.MessageCreate, message []string) {
+	if message[0] == "ping" {
+		s.ChannelMessageSend(m.ChannelID, "Pong!")
+	} else {
+		s.ChannelMessageSend(m.ChannelID, "Ping!")
+	}
 }
 
 func msgHelp(s *discordgo.Session, m *discordgo.MessageCreate, msgList []string) {
@@ -29,7 +29,7 @@ func msgHelp(s *discordgo.Session, m *discordgo.MessageCreate, msgList []string)
 	}
 
 	s.ChannelMessageSendEmbed(m.ChannelID, &discordgo.MessageEmbed{
-		Color: 0,
+		Color: 0xeeff00,
 
 		Fields: []*discordgo.MessageEmbedField{
 			{
@@ -43,6 +43,13 @@ func msgHelp(s *discordgo.Session, m *discordgo.MessageCreate, msgList []string)
 func gitHubLink(s *discordgo.Session, m *discordgo.MessageCreate, _ []string) {
 	s.ChannelMessageSend(
 		m.ChannelID,
-		"Check out what's under the hood here: https://github.com/Tkdefender88/discordbot "+
+		"Check out what's under the hood here: https://github.com/Tkdefender88/officerDva"+
 			"\nLeave a star and make Juicetin's day! :star:")
+}
+
+func celebration(s *discordgo.Session, m *discordgo.MessageCreate, _ []string) {
+	s.ChannelMessageSend(
+		m.ChannelID,
+		":sparkles: Woot woot! Time to partay! YAY! :confetti_ball: :tada:",
+	)
 }
