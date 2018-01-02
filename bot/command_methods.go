@@ -29,11 +29,11 @@ func msgHelp(s *discordgo.Session, m *discordgo.MessageCreate, msgList []string)
 	}
 
 	s.ChannelMessageSendEmbed(m.ChannelID, &discordgo.MessageEmbed{
-		Color: 0xeeff00,
+		Color: config.EmbedColor,
 
 		Fields: []*discordgo.MessageEmbedField{
 			{
-				Name:  "OfficerDva",
+				Name:  config.BotName,
 				Value: strings.Join(commands, ", ") + "\n\n use `" + config.BotPrefix + "help [command]` for more details",
 			},
 		},

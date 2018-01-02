@@ -7,15 +7,19 @@ import (
 )
 
 var (
-	Token     string
-	BotPrefix string
+	Token      string
+	BotPrefix  string
+	BotName    string
+	EmbedColor int
 
 	config *configStruct
 )
 
 type configStruct struct {
-	Token     string `json:"Token"`
-	BotPrefix string `json:"BotPrefix"`
+	Token      string `json:"Token"`
+	BotPrefix  string `json:"BotPrefix"`
+	BotName    string `json:"BotName"`
+	EmbedColor int    `json:"Color"`
 }
 
 //ReadConfig reads the config json file and finds the bot Token and the prefix character
@@ -40,6 +44,10 @@ func ReadConfig() error {
 
 	Token = config.Token
 	BotPrefix = config.BotPrefix
+	BotName = config.BotName
+	EmbedColor = config.EmbedColor
+
+	fmt.Println(EmbedColor)
 
 	return nil
 }

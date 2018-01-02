@@ -7,6 +7,7 @@ import (
 	"io/ioutil"
 	"strings"
 
+	"github.com/Tkdefender88/officerDva/config"
 	"github.com/bwmarrin/discordgo"
 )
 
@@ -68,7 +69,7 @@ func sendMeme(s *discordgo.Session, m *discordgo.MessageCreate, meme Meme) {
 	}
 
 	s.ChannelMessageSendEmbed(m.ChannelID, &discordgo.MessageEmbed{
-		Color: 0xeeff00,
+		Color: config.EmbedColor,
 
 		Image: &discordgo.MessageEmbedImage{
 			URL:    meme.Link,
@@ -92,11 +93,11 @@ func listMemes(s *discordgo.Session, m *discordgo.MessageCreate) {
 	}
 
 	s.ChannelMessageSendEmbed(dmChannel.ID, &discordgo.MessageEmbed{
-		Color: 0xeeff00,
+		Color: config.EmbedColor,
 
 		Fields: []*discordgo.MessageEmbedField{
 			{
-				Name:  "OfficerDva",
+				Name:  config.BotName,
 				Value: strings.Join(names, " "),
 			},
 		},
