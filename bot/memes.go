@@ -18,7 +18,7 @@ func memeMsg(s *discordgo.Session, m *discordgo.MessageCreate, msgList []string)
 	//Initialize meme list
 
 	//Get the file of all the memes
-	memeFile, err := ioutil.ReadFile("bot/memes.json")
+	memeFile, err := ioutil.ReadFile("config/memes.json")
 
 	if err != nil {
 		fmt.Println(err.Error())

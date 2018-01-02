@@ -45,6 +45,7 @@ builds/**/images/*
 *.mp4
 *.png
 *.jpeg
+*.json
 
 # security / ssl
 *.pem
