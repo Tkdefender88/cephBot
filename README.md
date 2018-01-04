@@ -8,8 +8,6 @@
   
   music playing
   
-  urban dictionary lookup
-  
 ## Built with
   
   [Discordgo](https://github.com/bwmarrin/discordgo) - The discord API library for go
