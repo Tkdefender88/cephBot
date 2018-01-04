@@ -3,13 +3,11 @@ package main
 import (
 	"fmt"
 
-	"github.com/Tkdefender88/officerDva/bot"
-	"github.com/Tkdefender88/officerDva/config"
+	"github.com/Tkdefender88/cephBot/bot"
+	"github.com/Tkdefender88/cephBot/config"
 )
 
 const token string = ""
-
-var BotID string
 
 func main() {
 	err := config.ReadConfig()
