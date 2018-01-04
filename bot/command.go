@@ -27,6 +27,7 @@ func (c command) helpMessage(s *discordgo.Session, m *discordgo.MessageCreate) {
 		},
 	})
 }
+
 func (c command) add() command {
 	commandMap[toLower(c.Name)] = c
 	return c
