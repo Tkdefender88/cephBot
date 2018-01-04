@@ -43,7 +43,7 @@ func msgHelp(s *discordgo.Session, m *discordgo.MessageCreate, msgList []string)
 func gitHubLink(s *discordgo.Session, m *discordgo.MessageCreate, _ []string) {
 	s.ChannelMessageSend(
 		m.ChannelID,
-		"Check out what's under the hood here: https://github.com/Tkdefender88/officerDva"+
+		"Check out what's under the hood here: https://github.com/Tkdefender88/cephBot"+
 			"\nLeave a star and make Juicetin's day! :star:")
 }
 
