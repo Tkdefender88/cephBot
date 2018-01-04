@@ -7,7 +7,7 @@ import (
 	"net/http"
 	"strings"
 
-	"github.com/Tkdefender88/officerDva/config"
+	"github.com/Tkdefender88/cephBot/config"
 	"github.com/bwmarrin/discordgo"
 )
 
