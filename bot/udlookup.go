@@ -59,6 +59,19 @@ func udLookup(s *discordgo.Session, m *discordgo.MessageCreate, msgList []string
 		return
 	}
 
+	if len(res.LookupList[0].Definition) > 1024 {
+		s.ChannelMessageSendEmbed(m.ChannelID, &discordgo.MessageEmbed{
+			Color: config.EmbedColor,
+
+			Fields: []*discordgo.MessageEmbedField{
+				{
+					Name:  "Error",
+					Value: "Sorry that definition is too large for a discord embed. RIP",
+				},
+			},
+		})
+	}
+
 	//Send result as an embeded message
 	embedUDresult(s, m, &res.LookupList[0])
 }

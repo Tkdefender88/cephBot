@@ -36,8 +36,7 @@ func memeMsg(s *discordgo.Session, m *discordgo.MessageCreate, msgList []string)
 	//Test for arguments.
 	if len(msgList) < 2 {
 		listMemes(s, m)
-		v, _ := s.ChannelMessage(m.ChannelID, m.ID)
-		s.ChannelMessageDelete(m.ChannelID, v.ID)
+		s.ChannelMessageDelete(m.ChannelID, m.ID)
 		return
 	}
 

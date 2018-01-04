@@ -52,4 +52,6 @@ func celebration(s *discordgo.Session, m *discordgo.MessageCreate, _ []string) {
 		m.ChannelID,
 		":sparkles: Woot woot! Time to partay! YAY! :confetti_ball: :tada:",
 	)
+
+	s.ChannelMessageDelete(m.ChannelID, m.ID)
 }
