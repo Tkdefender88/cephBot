@@ -7,6 +7,12 @@
   big emoji
   
   music playing
+
+  user info
+
+  twitter updates
+
+  leet speek
   
 ## Built with
   
