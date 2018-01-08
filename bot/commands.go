@@ -35,6 +35,13 @@ var (
 		"Search things on urban dictionary using `>ud [search]`",
 		false,
 		udLookup}.add()
+
+	bigEmojis = command{
+		"moji",
+		"Args: [emoji]\n\nPosts a large image of an emoji\nEmoji name must be in colon format" +
+			"\n\nExample: `>moji :smile:`",
+		false,
+		bigMoji}.add()
 )
 
 //ParseCommand takes in a discord session and a discordgo Message and a message string
