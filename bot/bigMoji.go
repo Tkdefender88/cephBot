@@ -4,10 +4,9 @@ import (
 	"fmt"
 	"net/http"
 	"os"
+	"regexp"
 
 	"github.com/bwmarrin/discordgo"
-	//	"github.com/Tkdefender88/cephBot/config"
-	"regexp"
 )
 
 var (
