@@ -12,9 +12,10 @@ import (
 )
 
 var (
-	memes *Memes
+	memelist *memes
 )
 
+//memeMsg takes in a message and sees if it matches a meme in the repository if it does sends it
 func memeMsg(s *discordgo.Session, m *discordgo.MessageCreate, msgList []string) {
 	//Initialize meme list
 
@@ -26,7 +27,7 @@ func memeMsg(s *discordgo.Session, m *discordgo.MessageCreate, msgList []string)
 		return
 	}
 
-	err = json.Unmarshal([]byte(memeFile), &memes)
+	err = json.Unmarshal([]byte(memeFile), &memelist)
 
 	if err != nil {
 		fmt.Println(err.Error())
@@ -53,16 +54,17 @@ func memeMsg(s *discordgo.Session, m *discordgo.MessageCreate, msgList []string)
 
 //Goes through the array of memes and compares the name value and the argument from the user
 //If one matches then that meme is returned. otherwise an error is sent back
-func selectMeme(msg string) (Meme, error) {
-	for _, element := range memes.Memes {
+func selectMeme(msg string) (meme, error) {
+	for _, element := range memelist.Memes {
 		if toLower(element.Name) == toLower(msg) {
 			return element, nil
 		}
 	}
-	return memes.Memes[0], errors.New("Meme wasn't found")
+	return memelist.Memes[0], errors.New("Meme wasn't found")
 }
 
-func sendMeme(s *discordgo.Session, m *discordgo.MessageCreate, meme Meme) {
+//sendMeme takes a selected meme and sends it to the chat and deletes the evidence
+func sendMeme(s *discordgo.Session, m *discordgo.MessageCreate, me meme) {
 	if m != nil {
 		s.ChannelMessageDelete(m.ChannelID, m.ID)
 	}
@@ -71,29 +73,31 @@ func sendMeme(s *discordgo.Session, m *discordgo.MessageCreate, meme Meme) {
 		Color: config.EmbedColor,
 
 		Image: &discordgo.MessageEmbedImage{
-			URL:    meme.Link,
+			URL:    me.Link,
 			Width:  100,
 			Height: 100,
 		},
 	})
 }
 
+//listMemes sends a dm to the user requesting with a list of all the memes available
 func listMemes(s *discordgo.Session, m *discordgo.MessageCreate) {
+	//Populate a list with meme names
 	var names []string
-	for _, val := range memes.Memes {
+	for _, val := range memelist.Memes {
 		names = append(names, "`"+val.Name+"`\n")
 	}
-
+	//get a dm channel ID
 	dmChannel, err := s.UserChannelCreate(m.Author.ID)
 
 	if err != nil {
 		fmt.Println(err.Error())
 		return
 	}
-
+	//Send the list, Kronk!
 	s.ChannelMessageSendEmbed(dmChannel.ID, &discordgo.MessageEmbed{
 		Color: config.EmbedColor,
-
+		//WRONG LIST! AHHHH!
 		Fields: []*discordgo.MessageEmbedField{
 			{
 				Name:  config.BotName,
@@ -103,11 +107,12 @@ func listMemes(s *discordgo.Session, m *discordgo.MessageCreate) {
 	})
 }
 
-type Memes struct {
-	Memes []Meme `json:"memes"`
+//Structs for unMarshalling the json file
+type memes struct {
+	Memes []meme `json:"memes"`
 }
 
-type Meme struct {
+type meme struct {
 	Name string `json:"Name"`
 	Link string `json:"Link"`
 }
