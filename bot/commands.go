@@ -3,6 +3,7 @@ package bot
 import (
 	"strings"
 
+	"github.com/Tkdefender88/cephBot/config"
 	"github.com/bwmarrin/discordgo"
 )
 
@@ -42,6 +43,12 @@ var (
 			"\n\nExample: `>moji :smile:`",
 		false,
 		bigMoji}.add()
+
+	leet = command{
+		"leet",
+		"Args: [msg to convert to leet speak]\nexample:`" + config.BotPrefix + "leet it's lit fam` converts message to !7'5 1!7 f4m",
+		false,
+		leetSpeak}.add()
 )
 
 //ParseCommand takes in a discord session and a discordgo Message and a message string
