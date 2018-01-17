@@ -3,16 +3,14 @@ package bot
 import (
 	"strings"
 
-	"github.com/Tkdefender88/cephBot/config"
 	"github.com/bwmarrin/discordgo"
 )
 
 var (
 	commandMap = make(map[string]command)
-
-	pingpong = command{"ping", "\"Pong!\"", false, ping}.add()
-	pongping = command{"pong", "\"Ping!\"", false, ping}.add()
-	help     = command{"help", "", false, msgHelp}.add()
+	pingpong   = command{"ping", "\"Pong!\"", false, ping}.add()
+	pongping   = command{"pong", "\"Ping!\"", false, ping}.add()
+	help       = command{"help", "", false, msgHelp}.add()
 
 	celebrate = command{"woot", "starts a celebration!",
 		false,
@@ -46,9 +44,14 @@ var (
 
 	leet = command{
 		"leet",
-		"Args: [msg to convert to leet speak]\nexample:`" + config.BotPrefix + "leet it's lit fam` converts message to !7'5 1!7 f4m",
+		"`Args: [msg]`\nexample: `>leet it's lit fam` converts message to !7'5 1!7 f4m",
 		false,
 		leetSpeak}.add()
+	prefix = command{
+		"prefix",
+		"`Args: [prefix]`\n\nchanges the prefix that summons the bot to action\nRequires Admin privleges",
+		true,
+		setPrefix}.add()
 )
 
 //ParseCommand takes in a discord session and a discordgo Message and a message string
