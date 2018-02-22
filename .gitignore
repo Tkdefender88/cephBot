@@ -1,6 +1,7 @@
 memes.json
 config.json
 .vscode
+/bot/spamTrevor.go
 /emoji
 # Compiled Object files, Static and Dynamic libs (Shared Objects)
 *.o
