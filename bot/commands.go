@@ -11,37 +11,33 @@ var (
 	pingpong   = command{"ping", "\"Pong!\"", false, ping}.add()
 	pongping   = command{"pong", "\"Ping!\"", false, ping}.add()
 	help       = command{"help", "", false, msgHelp}.add()
-
-	celebrate = command{"woot", "starts a celebration!",
+	pingT      = command{"pingTrev", "", true, pingTrevor}.add()
+	celebrate  = command{"woot", "starts a celebration!",
 		false,
 		celebration}.add()
-
 	gitLink = command{
 		"git",
 		"displays the github link where I'm being developed",
 		false,
 		gitHubLink}.add()
-
 	memeMachine = command{
 		"meme",
 		"Args [meme name]\nIf no meme given then a list is sent in pm\n\nPosts" +
 			"a dank meme to the chat.",
 		false,
 		memeMsg}.add()
-
 	urbanLookup = command{
 		"ud",
 		"Search things on urban dictionary using `>ud [search]`",
 		false,
 		udLookup}.add()
-
 	bigEmojis = command{
 		"moji",
 		"Args: [emoji]\n\nPosts a large image of an emoji\nEmoji name must be in colon format" +
-			"\n\nExample: `>moji :smile:`",
+			"\n\nExample: `>moji :smile:`\n If a `a` tag is given after an emoji then if the emoji" +
+			" given is animated then it will display animated and big",
 		false,
 		bigMoji}.add()
-
 	leet = command{
 		"leet",
 		"`Args: [msg]`\nexample: `>leet it's lit fam` converts message to !7'5 1!7 f4m",
@@ -65,7 +61,6 @@ func parseCommand(s *discordgo.Session, m *discordgo.MessageCreate, message stri
 		}
 		return msgList[0]
 	}())
-
 	if com == toLower(commandMap[com].Name) {
 		commandMap[com].Exec(s, m, msgList)
 		return

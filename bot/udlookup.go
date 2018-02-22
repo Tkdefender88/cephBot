@@ -38,12 +38,10 @@ func udLookup(s *discordgo.Session, m *discordgo.MessageCreate, msgList []string
 	lookupInfo := searchUD(url)
 	//Parse the json data for definition author rating and example
 	res, err := parseJSONData(lookupInfo)
-
 	if err != nil {
 		fmt.Println(err.Error())
 		return
 	}
-
 	//If no result is found then send an error message to chat and stop.
 	if res.ResultType == "no_results" {
 		s.ChannelMessageSendEmbed(m.ChannelID, &discordgo.MessageEmbed{
@@ -58,7 +56,6 @@ func udLookup(s *discordgo.Session, m *discordgo.MessageCreate, msgList []string
 		})
 		return
 	}
-
 	if len(res.LookupList[0].Definition) > 1024 {
 		s.ChannelMessageSendEmbed(m.ChannelID, &discordgo.MessageEmbed{
 			Color: config.EmbedColor,
@@ -71,7 +68,6 @@ func udLookup(s *discordgo.Session, m *discordgo.MessageCreate, msgList []string
 			},
 		})
 	}
-
 	//Send result as an embeded message
 	embedUDresult(s, m, &res.LookupList[0])
 }
@@ -80,7 +76,6 @@ func embedUDresult(s *discordgo.Session, m *discordgo.MessageCreate, data *looku
 	rating := fmt.Sprintf(":+1:`%d` :-1:`%d`", data.Thumbup, data.Thumbdown)
 	s.ChannelMessageSendEmbed(m.ChannelID, &discordgo.MessageEmbed{
 		Color: config.EmbedColor,
-
 		Fields: []*discordgo.MessageEmbedField{
 			{
 				Name:  "Definition",
@@ -102,37 +97,29 @@ func embedUDresult(s *discordgo.Session, m *discordgo.MessageCreate, data *looku
 			},
 		},
 	})
-
 }
 
 //Sends an HTTP get request to the urban dictionary api and returns the json data that it
 //receives as a response
 func searchUD(url string) (body []byte) {
 	data, err := http.Get(url)
-
 	if err != nil {
 		fmt.Println(err.Error())
 		return
 	}
-
 	body, readErr := ioutil.ReadAll(data.Body)
-
 	if readErr != nil {
 		fmt.Println(readErr.Error())
 		return
 	}
-
 	return body
 }
 
 func parseJSONData(data []byte) (res *result, err error) {
-
 	jsonErr := json.Unmarshal([]byte(data), &res)
-
 	if jsonErr != nil {
 		fmt.Println(jsonErr.Error())
 		return res, err
 	}
-
 	return res, nil
 }

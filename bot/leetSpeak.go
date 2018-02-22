@@ -24,7 +24,6 @@ func leetSpeak(s *discordgo.Session, m *discordgo.MessageCreate, msgList []strin
 	leetMsg := ""
 	//turn their message into one complete string
 	msg := strings.Join(msgList[1:], " ")
-
 	//go through every character and convert
 	for _, char := range msg {
 		if i, ok := leetSet[strings.ToLower(string(char))]; ok {

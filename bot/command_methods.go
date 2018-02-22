@@ -22,15 +22,12 @@ func msgHelp(s *discordgo.Session, m *discordgo.MessageCreate, msgList []string)
 			return
 		}
 	}
-
 	var commands []string
 	for _, val := range commandMap {
 		commands = append(commands, "`"+val.Name+"`")
 	}
-
 	s.ChannelMessageSendEmbed(m.ChannelID, &discordgo.MessageEmbed{
 		Color: config.EmbedColor,
-
 		Fields: []*discordgo.MessageEmbedField{
 			{
 				Name:  config.BotName,
@@ -52,6 +49,5 @@ func celebration(s *discordgo.Session, m *discordgo.MessageCreate, _ []string) {
 		m.ChannelID,
 		":sparkles: Woot woot! Time to partay! YAY! :confetti_ball: :tada:",
 	)
-
 	s.ChannelMessageDelete(m.ChannelID, m.ID)
 }

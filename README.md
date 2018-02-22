@@ -9,8 +9,6 @@
   user info
 
   twitter updates
-
-  leet speek
   
 ## Built with
   

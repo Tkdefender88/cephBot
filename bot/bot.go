@@ -12,6 +12,7 @@ var (
 	//BotID the bot's ID
 	BotID string
 	goBot *discordgo.Session
+	juice = "146276564726841344" //I am the juice
 )
 
 //Start starts the bot session
@@ -21,23 +22,18 @@ func Start() {
 		fmt.Println(err.Error())
 		return
 	}
-
 	u, err := goBot.User("@me")
-
 	if err != nil {
 		fmt.Println(err.Error())
 		return
 	}
-
 	BotID = u.ID
-
 	goBot.AddHandler(messageCreate)
 	err = goBot.Open()
 	if err != nil {
 		fmt.Println(err.Error())
 		return
 	}
-
 	fmt.Println("Bot is running")
 }
 
