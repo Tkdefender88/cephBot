@@ -31,6 +31,7 @@ func msgHelp(s *discordgo.Session, m *discordgo.MessageCreate, msgList []string)
 		//if the string is not matched then we inform them and then print the list of commands
 		s.ChannelMessageSend(m.ChannelID, msgList[1]+" is not a command I know, sorry")
 	}
+
 	//create an list of the commands and populate it with each command name
 	var commands []string
 	for _, val := range commandMap {
@@ -40,7 +41,6 @@ func msgHelp(s *discordgo.Session, m *discordgo.MessageCreate, msgList []string)
 	//SEND THE LIST OF ALL COMMANDS WOO!
 	s.ChannelMessageSendEmbed(m.ChannelID, &discordgo.MessageEmbed{
 		Color: config.EmbedColor,
-
 		Fields: []*discordgo.MessageEmbedField{
 			{
 				Name:  config.BotName,
@@ -64,6 +64,5 @@ func celebration(s *discordgo.Session, m *discordgo.MessageCreate, _ []string) {
 		m.ChannelID,
 		":sparkles: Woot woot! Time to partay! YAY! :confetti_ball: :tada:",
 	)
-
 	s.ChannelMessageDelete(m.ChannelID, m.ID)
 }

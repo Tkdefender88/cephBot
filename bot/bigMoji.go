@@ -21,14 +21,17 @@ func bigMoji(s *discordgo.Session, m *discordgo.MessageCreate, msgList []string)
 		return
 	}
 	//Tries to match the command recieved to a custom emoji tag and ID as disocrd stores them
-	match := emojiRegex.FindStringSubmatch(msgList[1])
-
+  match := emojiRegex.FindStringSubmatch(msgList[1])
 	//If the message didn't match the regex then we know it's not a custom server emoji
 	//which means we need to try and match their message to a standard unicode emoji
 	if len(match) == 0 {
 		sendEmojiFromFile(s, m, msgList[1])
 		return
 	}
+
+	url := fmt.Sprintf("https://cdn.discordapp.com/emojis/%s.png", match[2])
+	file := "emoji.png"
+
 
 	//This section builds the emoji url where it is stored on discord also takes into account if it's animated
 	var url string
@@ -47,8 +50,7 @@ func bigMoji(s *discordgo.Session, m *discordgo.MessageCreate, msgList []string)
 		fmt.Printf(err.Error())
 		return
 	}
-	defer resp.Body.Close()
-
+  defer resp.Body.Close()
 	//Send the big emoji we found and delete the message that called for it.
 	s.ChannelFileSend(m.ChannelID, file, resp.Body)
 	s.ChannelMessageDelete(m.ChannelID, m.ID)
@@ -59,12 +61,13 @@ func bigMoji(s *discordgo.Session, m *discordgo.MessageCreate, msgList []string)
 func sendEmojiFromFile(s *discordgo.Session, m *discordgo.MessageCreate, e string) {
 	//turn the string into an emoji file name as set by twemoji
 	emoji := emojiFile(e)
-
+	if emoji == "" {
+		return
+	}
 	//Oh no, we didn't find anything cuz people are dumb and didn't ask for a good emoji.
 	if emoji == "" {
 		return
 	}
-
 	//Opens the emoji forlder and tries to find the file of the emoji image
 	file, err := os.Open(fmt.Sprintf("emoji/%s.png", emoji))
 	if err != nil {
@@ -72,7 +75,6 @@ func sendEmojiFromFile(s *discordgo.Session, m *discordgo.MessageCreate, e strin
 		return
 	}
 	defer file.Close()
-
 	//Send the emoji and delete the evidence
 	s.ChannelFileSend(m.ChannelID, "emoji.png", file)
 	s.ChannelMessageDelete(m.ChannelID, m.ID)
@@ -93,7 +95,6 @@ func emojiFile(e string) string {
 		} else {
 			file = fmt.Sprintf("%x", r)
 		}
-
 		if _, err := os.Stat(fmt.Sprintf("emoji/%s.png", file)); err == nil {
 			found = file
 		} else if file != "" {

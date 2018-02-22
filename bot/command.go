@@ -6,19 +6,16 @@ import (
 )
 
 type command struct {
-	Name string
-	Help string
-
+	Name      string
+	Help      string
 	AdminOnly bool
-
-	Exec func(*discordgo.Session, *discordgo.MessageCreate, []string)
+	Exec      func(*discordgo.Session, *discordgo.MessageCreate, []string)
 }
 
 //Embeds a the help message of the command c calling the function
 func (c command) helpMessage(s *discordgo.Session, m *discordgo.MessageCreate) {
 	s.ChannelMessageSendEmbed(m.ChannelID, &discordgo.MessageEmbed{
 		Color: config.EmbedColor,
-
 		Fields: []*discordgo.MessageEmbedField{
 			{
 				Name:  c.Name,
