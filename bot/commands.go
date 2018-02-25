@@ -11,8 +11,8 @@ var (
 	pingpong   = command{"ping", "\"Pong!\"", false, ping}.add()
 	pongping   = command{"pong", "\"Ping!\"", false, ping}.add()
 	help       = command{"help", "", false, msgHelp}.add()
-	pingT      = command{"pingTrev", "", true, pingTrevor}.add()
-	celebrate  = command{"woot", "starts a celebration!",
+	//pingT      = command{"pingTrev", "", true, pingTrevor}.add()
+	celebrate = command{"woot", "starts a celebration!",
 		false,
 		celebration}.add()
 	gitLink = command{
