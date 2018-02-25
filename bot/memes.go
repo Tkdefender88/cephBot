@@ -12,7 +12,7 @@ import (
 )
 
 var (
-	memelist *memes
+	memelist *Memes
 )
 
 //memeMsg takes in a message and sees if it matches a meme in the repository if it does sends it
@@ -24,7 +24,7 @@ func memeMsg(s *discordgo.Session, m *discordgo.MessageCreate, msgList []string)
 		fmt.Println(err.Error())
 		return
 	}
-  
+
 	err = json.Unmarshal([]byte(memeFile), &memelist)
 	if err != nil {
 		fmt.Println(err.Error())
@@ -48,7 +48,7 @@ func memeMsg(s *discordgo.Session, m *discordgo.MessageCreate, msgList []string)
 
 //Goes through the array of memes and compares the name value and the argument from the user
 //If one matches then that meme is returned. otherwise an error is sent back
-func selectMeme(msg string) (meme, error) {
+func selectMeme(msg string) (Meme, error) {
 	for _, element := range memelist.Memes {
 		if toLower(element.Name) == toLower(msg) {
 			return element, nil
@@ -58,7 +58,7 @@ func selectMeme(msg string) (meme, error) {
 }
 
 //sendMeme takes a selected meme and sends it to the chat and deletes the evidence
-func sendMeme(s *discordgo.Session, m *discordgo.MessageCreate, me meme) {
+func sendMeme(s *discordgo.Session, m *discordgo.MessageCreate, me Meme) {
 	if m != nil {
 		s.ChannelMessageDelete(m.ChannelID, m.ID)
 	}
@@ -98,7 +98,6 @@ func listMemes(s *discordgo.Session, m *discordgo.MessageCreate) {
 	})
 }
 
-
 //Memes is used to store all the used memes
 type Memes struct {
 	Memes []Meme `json:"memes"`
@@ -106,3 +105,6 @@ type Memes struct {
 
 //Meme is a type that stores a name of the meme and the link to the meme
 type Meme struct {
+	Name string `json:"Name"`
+	Link string `json:"Link"`
+}

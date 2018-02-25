@@ -21,17 +21,13 @@ func bigMoji(s *discordgo.Session, m *discordgo.MessageCreate, msgList []string)
 		return
 	}
 	//Tries to match the command recieved to a custom emoji tag and ID as disocrd stores them
-  match := emojiRegex.FindStringSubmatch(msgList[1])
+	match := emojiRegex.FindStringSubmatch(msgList[1])
 	//If the message didn't match the regex then we know it's not a custom server emoji
 	//which means we need to try and match their message to a standard unicode emoji
 	if len(match) == 0 {
 		sendEmojiFromFile(s, m, msgList[1])
 		return
 	}
-
-	url := fmt.Sprintf("https://cdn.discordapp.com/emojis/%s.png", match[2])
-	file := "emoji.png"
-
 
 	//This section builds the emoji url where it is stored on discord also takes into account if it's animated
 	var url string
@@ -50,7 +46,7 @@ func bigMoji(s *discordgo.Session, m *discordgo.MessageCreate, msgList []string)
 		fmt.Printf(err.Error())
 		return
 	}
-  defer resp.Body.Close()
+	defer resp.Body.Close()
 	//Send the big emoji we found and delete the message that called for it.
 	s.ChannelFileSend(m.ChannelID, file, resp.Body)
 	s.ChannelMessageDelete(m.ChannelID, m.ID)
