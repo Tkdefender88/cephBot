@@ -37,12 +37,16 @@ func Start() {
 	fmt.Println("Bot is running")
 }
 
-func messageCreate(session *discordgo.Session, message *discordgo.MessageCreate) {
+func messageCreate(session *discordgo.Session,
+	message *discordgo.MessageCreate) {
 	if message.Author.ID == BotID {
 		return
 	}
 
 	if strings.HasPrefix(message.Content, config.BotPrefix) {
-		parseCommand(session, message, strings.TrimPrefix(message.Content, config.BotPrefix))
+		parseCommand(
+			session,
+			message,
+			strings.TrimPrefix(message.Content, config.BotPrefix))
 	}
 }
