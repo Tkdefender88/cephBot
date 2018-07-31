@@ -5,12 +5,12 @@ import (
 	"github.com/bwmarrin/discordgo"
 )
 
-type command struct {
-	Name      string
-	Help      string
-	AdminOnly bool
-	Exec      func(*discordgo.Session, *discordgo.MessageCreate, []string)
-}
+// type command struct {
+// 	Name      string
+// 	Help      string
+// 	AdminOnly bool
+// 	Exec      func(*discordgo.Session, *discordgo.MessageCreate, []string)
+// }
 
 //Embeds a the help message of the command c calling the function
 func (c command) helpMessage(s *discordgo.Session, m *discordgo.MessageCreate) {

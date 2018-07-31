@@ -11,6 +11,7 @@ import (
 	"github.com/bwmarrin/discordgo"
 )
 
+/*
 type result struct {
 	LookupList []lookup `json:"list"`
 	ResultType string   `json:"result_type"`
@@ -24,7 +25,7 @@ type lookup struct {
 	Thumbup    int    `json:"thumbs_up"`
 	Thumbdown  int    `json:"thumbs_down"`
 }
-
+*/
 const (
 	apiBase    string = "http://api.urbandictionary.com"
 	apiVersion string = "v0"

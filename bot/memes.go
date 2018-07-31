@@ -98,13 +98,13 @@ func listMemes(s *discordgo.Session, m *discordgo.MessageCreate) {
 	})
 }
 
-//Memes is used to store all the used memes
-type Memes struct {
-	Memes []Meme `json:"memes"`
-}
+// //Memes is used to store all the used memes
+// type Memes struct {
+// 	Memes []Meme `json:"memes"`
+// }
 
-//Meme is a type that stores a name of the meme and the link to the meme
-type Meme struct {
-	Name string `json:"Name"`
-	Link string `json:"Link"`
-}
+// //Meme is a type that stores a name of the meme and the link to the meme
+// type Meme struct {
+// 	Name string `json:"Name"`
+// 	Link string `json:"Link"`
+// }
