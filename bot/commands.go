@@ -11,8 +11,9 @@ var (
 	pingpong   = command{"ping", "\"Pong!\"", false, ping}.add()
 	pongping   = command{"pong", "\"Ping!\"", false, ping}.add()
 	help       = command{"help", "", false, msgHelp}.add()
-	//pingT      = command{"pingTrev", "", true, pingTrevor}.add()
-	celebrate = command{"woot", "starts a celebration!",
+	celebrate  = command{
+		"woot",
+		"starts a celebration!",
 		false,
 		celebration}.add()
 	gitLink = command{
@@ -20,12 +21,6 @@ var (
 		"displays the github link where I'm being developed",
 		false,
 		gitHubLink}.add()
-	memeMachine = command{
-		"meme",
-		"Args [meme name]\nIf no meme given then a list is sent in pm\n\nPosts" +
-			"a dank meme to the chat.",
-		false,
-		memeMsg}.add()
 	urbanLookup = command{
 		"ud",
 		"Search things on urban dictionary using `>ud [search]`",

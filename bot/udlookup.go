@@ -11,21 +11,6 @@ import (
 	"github.com/bwmarrin/discordgo"
 )
 
-/*
-type result struct {
-	LookupList []lookup `json:"list"`
-	ResultType string   `json:"result_type"`
-}
-
-type lookup struct {
-	Word       string `json:"word"`
-	Definition string `json:"definition"`
-	Example    string `json:"example"`
-	Author     string `json:"author"`
-	Thumbup    int    `json:"thumbs_up"`
-	Thumbdown  int    `json:"thumbs_down"`
-}
-*/
 const (
 	apiBase    string = "http://api.urbandictionary.com"
 	apiVersion string = "v0"
@@ -70,21 +55,22 @@ func udLookup(s *discordgo.Session, m *discordgo.MessageCreate, msgList []string
 		})
 	}
 	//Send result as an embeded message
-	embedUDresult(s, m, &res.LookupList[0])
+	embedUDresult(s, m, res)
 }
 
-func embedUDresult(s *discordgo.Session, m *discordgo.MessageCreate, data *lookup) {
-	rating := fmt.Sprintf(":+1:`%d` :-1:`%d`", data.Thumbup, data.Thumbdown)
+func embedUDresult(s *discordgo.Session, m *discordgo.MessageCreate, data *result) {
+	lookup := data.LookupList[0]
+	rating := fmt.Sprintf(":+1:`%d` :-1:`%d`", lookup.Thumbup, lookup.Thumbdown)
 	s.ChannelMessageSendEmbed(m.ChannelID, &discordgo.MessageEmbed{
 		Color: config.EmbedColor,
 		Fields: []*discordgo.MessageEmbedField{
 			{
 				Name:  "Definition",
-				Value: data.Definition,
+				Value: lookup.Definition,
 			},
 			{
 				Name:  "Example",
-				Value: data.Example,
+				Value: lookup.Example,
 			},
 			{
 				Name:   "Rating",
@@ -93,7 +79,7 @@ func embedUDresult(s *discordgo.Session, m *discordgo.MessageCreate, data *looku
 			},
 			{
 				Name:   "Author",
-				Value:  data.Author,
+				Value:  lookup.Author,
 				Inline: true,
 			},
 		},
