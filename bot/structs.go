@@ -4,29 +4,15 @@ import "github.com/bwmarrin/discordgo"
 
 //The result of an API call to the urbandictionary API
 type result struct {
-	LookupList []lookup `json:"list"`
-	ResultType string   `json:"result_type"`
-}
-
-//gets a lookup from the urbandictionary API
-type lookup struct {
-	Word       string `json:"word"`
-	Definition string `json:"definition"`
-	Example    string `json:"example"`
-	Author     string `json:"author"`
-	Thumbup    int    `json:"thumbs_up"`
-	Thumbdown  int    `json:"thumbs_down"`
-}
-
-//Memes is used to store all the used memes
-type Memes struct {
-	Memes []Meme `json:"memes"`
-}
-
-//Meme is a type that stores a name of the meme and the link to the meme
-type Meme struct {
-	Name string `json:"Name"`
-	Link string `json:"Link"`
+	LookupList []struct {
+		Word       string `json:"word"`
+		Definition string `json:"definition"`
+		Example    string `json:"example"`
+		Author     string `json:"author"`
+		Thumbup    int    `json:"thumbs_up"`
+		Thumbdown  int    `json:"thumbs_down"`
+	} `json:"list"`
+	ResultType string `json:"result_type"`
 }
 
 //a blank template for a meme
@@ -54,7 +40,14 @@ type command struct {
 	Exec      func(*discordgo.Session, *discordgo.MessageCreate, []string)
 }
 
+type servers struct {
+	Count  int `json:"server_count"`
+	Server map[string]*guild
+}
+
 type guild struct {
 	GuildID       string `json:"guildID"`
 	CommandPrefix string `json:"prefix"`
+	EmbedColor    int    `json:"embed_color"`
+	Kicked        bool   `json:"kicked"`
 }

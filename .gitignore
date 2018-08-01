@@ -1,6 +1,7 @@
 memes.json
 config.json
 .vscode
+json/
 /bot/spamTrevor.go
 /emoji
 /memes

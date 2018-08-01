@@ -20,4 +20,9 @@ func setPrefix(s *discordgo.Session, m *discordgo.MessageCreate, msgList []strin
 		s.ChannelMessageSend(m.ChannelID, "Only the server owner can perform this magic trick!")
 		return
 	}
+
+	server := serverMap.Server[guild.ID]
+	server.CommandPrefix = msgList[1]
+
+	saveServers()
 }
