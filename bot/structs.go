@@ -40,7 +40,7 @@ type command struct {
 	Exec      func(*discordgo.Session, *discordgo.MessageCreate, []string)
 }
 
-type servers struct {
+type guilds struct {
 	Count  int `json:"server_count"`
 	Server map[string]*guild
 }

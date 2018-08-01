@@ -3,6 +3,7 @@ package bot
 import (
 	"encoding/json"
 	"fmt"
+	"io/ioutil"
 	"os"
 	"strings"
 
@@ -11,7 +12,7 @@ import (
 )
 
 var (
-	serverMap = new(servers)
+	guildMap = new(guilds)
 	//BotID the bot's ID
 	BotID string
 	goBot *discordgo.Session
@@ -45,12 +46,12 @@ func Start() {
 }
 
 func loadServers() error {
-	serverMap.Server = make(map[string]*guild)
-	return loadJSON("servers.json", serverMap)
+	guildMap.Server = make(map[string]*guild)
+	return loadJSON("servers.json", guildMap)
 }
 
 func saveServers() error {
-	return saveJSON("servers.json", serverMap)
+	return saveJSON("servers.json", guildMap)
 }
 
 func loadJSON(path string, v interface{}) error {
@@ -59,6 +60,7 @@ func loadJSON(path string, v interface{}) error {
 		fmt.Println("Could not open the file: ", path, err)
 		return err
 	}
+	defer file.Close()
 	if err := json.NewDecoder(file).Decode(v); err != nil {
 		fmt.Println("Could not load the json", path, err)
 		return err
@@ -67,15 +69,16 @@ func loadJSON(path string, v interface{}) error {
 }
 
 func saveJSON(path string, data interface{}) error {
-	file, err := os.OpenFile("json/"+path, os.O_WRONLY|os.O_CREATE, 0600)
+	bytes, err := json.Marshal(data)
 	if err != nil {
-		fmt.Println("Could not open file", path, err)
+		fmt.Println("Could not marshal guildMap into json")
+	}
+
+	if err := ioutil.WriteFile("json/"+path, bytes, 0600); err != nil {
+		fmt.Println("Could not write to file: ", err)
 		return err
 	}
-	if err := json.NewEncoder(file).Encode(data); err != nil {
-		fmt.Println("Could not save the json", path, err)
-		return err
-	}
+
 	return nil
 }
 
@@ -87,7 +90,7 @@ func messageCreate(session *discordgo.Session, message *discordgo.MessageCreate)
 	if err != nil {
 		fmt.Println("Could not get the guild details")
 	}
-	prefix := serverMap.Server[guild.ID].CommandPrefix
+	prefix := guildMap.Server[guild.ID].CommandPrefix
 	if strings.HasPrefix(message.Content, prefix) {
 		parseCommand(session, message, strings.TrimPrefix(message.Content, prefix))
 	}
@@ -99,8 +102,8 @@ func guildJoinEvent(s *discordgo.Session, g *discordgo.GuildCreate) {
 		return
 	}
 
-	if _, ok := serverMap.Server[g.Guild.ID]; !ok {
-		serverMap.Server[g.Guild.ID] = &guild{
+	if _, ok := guildMap.Server[g.Guild.ID]; !ok {
+		guildMap.Server[g.Guild.ID] = &guild{
 			GuildID:       g.Guild.ID,
 			CommandPrefix: config.BotPrefix,
 			EmbedColor:    config.EmbedColor,
