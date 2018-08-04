@@ -41,7 +41,7 @@ var (
 				y:         345,
 				ax:        0.5,
 				ay:        0.9,
-				width:     800,
+				width:     600,
 				lineSpace: 1.5,
 			},
 		},
