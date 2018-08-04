@@ -26,18 +26,21 @@ type template struct {
 
 //a textfield that gets placed on a meme template
 type textField struct {
-	x       int
-	y       int
-	flow    string
-	justify string
+	x         float64
+	y         float64
+	ax        float64
+	ay        float64
+	width     float64
+	lineSpace float64
 }
 
 //A command that the bot can recognize
 type command struct {
 	Name      string
 	Help      string
+	JuiceOnly bool
 	AdminOnly bool
-	Exec      func(*discordgo.Session, *discordgo.MessageCreate, []string)
+	Handler   func(*discordgo.Session, *discordgo.MessageCreate, []string)
 }
 
 type guilds struct {

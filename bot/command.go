@@ -1,16 +1,11 @@
 package bot
 
 import (
+	"strings"
+
 	"github.com/Tkdefender88/cephBot/config"
 	"github.com/bwmarrin/discordgo"
 )
-
-// type command struct {
-// 	Name      string
-// 	Help      string
-// 	AdminOnly bool
-// 	Exec      func(*discordgo.Session, *discordgo.MessageCreate, []string)
-// }
 
 //Embeds a the help message of the command c calling the function
 func (c command) helpMessage(s *discordgo.Session, m *discordgo.MessageCreate) {
@@ -26,6 +21,6 @@ func (c command) helpMessage(s *discordgo.Session, m *discordgo.MessageCreate) {
 }
 
 func (c command) add() command {
-	commandMap[toLower(c.Name)] = c
+	commandMap[strings.ToLower(c.Name)] = c
 	return c
 }

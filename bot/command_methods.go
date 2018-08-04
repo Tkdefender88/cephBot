@@ -23,7 +23,7 @@ func ping(s *discordgo.Session, m *discordgo.MessageCreate, message []string) {
 func msgHelp(s *discordgo.Session, m *discordgo.MessageCreate, msgList []string) {
 	//checks for an arg specifying a command for help
 	if len(msgList) == 2 {
-		if val, ok := commandMap[toLower(msgList[1])]; ok {
+		if val, ok := commandMap[strings.ToLower(msgList[1])]; ok {
 			//once the string is matched to a command display that commands help string
 			val.helpMessage(s, m)
 			return
