@@ -51,10 +51,17 @@ var (
 		setPrefix}.add()
 	meme = command{
 		"meme",
-		"Args: `[template name] <text1> <text2> ... <textn>` Changes",
+		"Args: `[template name] <text1> <text2> ... <textn>` \n\n select a template and add text to it to make your own meme!",
 		false,
 		false,
 		genMeme}.add()
+	xkcd = command{
+		"xkcd",
+		"Args: `<comic number>`\n fetches an xkcd comic from the interwebs\n" +
+			"Given a comic number it will fetch a specific comic. If left empty the current comic is posted",
+		false,
+		false,
+		getXkcd}.add()
 )
 
 //ParseCommand takes in a discord session and a discordgo Message and a message string

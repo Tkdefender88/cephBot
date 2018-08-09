@@ -27,8 +27,8 @@ var (
 		filePath:   "./memes/roll_safe.jpg",
 		nTextBoxes: 2,
 		wonb:       true,
-		textFields: []*textField{
-			&textField{
+		textFields: []textField{
+			textField{
 				x:         351,
 				y:         50,
 				ax:        0.5,
@@ -36,7 +36,7 @@ var (
 				width:     600,
 				lineSpace: 1.5,
 			},
-			&textField{
+			textField{
 				x:         351,
 				y:         345,
 				ax:        0.5,
@@ -52,8 +52,8 @@ var (
 		filePath:   "./memes/brain_expand_2.jpg",
 		nTextBoxes: 2,
 		wonb:       false,
-		textFields: []*textField{
-			&textField{
+		textFields: []textField{
+			textField{
 				x:         170,
 				y:         100,
 				ax:        0.5,
@@ -61,7 +61,7 @@ var (
 				width:     300,
 				lineSpace: 1.5,
 			},
-			&textField{
+			textField{
 				x:         170,
 				y:         360,
 				ax:        0.5,
@@ -77,8 +77,8 @@ var (
 		filePath:   "./memes/brain_expand_3.jpg",
 		nTextBoxes: 3,
 		wonb:       false,
-		textFields: []*textField{
-			&textField{
+		textFields: []textField{
+			textField{
 				x:         214,
 				y:         150,
 				ax:        0.5,
@@ -86,7 +86,7 @@ var (
 				width:     300,
 				lineSpace: 1.5,
 			},
-			&textField{
+			textField{
 				x:         214,
 				y:         430,
 				ax:        0.5,
@@ -94,7 +94,7 @@ var (
 				width:     300,
 				lineSpace: 1.5,
 			},
-			&textField{
+			textField{
 				x:         214,
 				y:         750,
 				ax:        0.5,

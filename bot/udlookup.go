@@ -12,14 +12,14 @@ import (
 )
 
 const (
-	apiBase    string = "http://api.urbandictionary.com"
+	udAPIBase  string = "http://api.urbandictionary.com"
 	apiVersion string = "v0"
 )
 
 func udLookup(s *discordgo.Session, m *discordgo.MessageCreate, msgList []string) {
 	//The search in the url needs to have words joined by plus signs
 	search := strings.Join(msgList[1:], "+")
-	url := fmt.Sprintf("%s/%s/define?term=%s", apiBase, apiVersion, search)
+	url := fmt.Sprintf("%s/%s/define?term=%s", udAPIBase, apiVersion, search)
 	//Get the json data from the web
 	lookupInfo := searchUD(url)
 	//Parse the json data for definition author rating and example
