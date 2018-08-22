@@ -7,9 +7,13 @@ import (
 )
 
 var (
-	Token      string
-	BotPrefix  string
-	BotName    string
+	//Token is the bots api token
+	Token string
+	//BotPrefix the default prefix the bot uses to be summoned
+	BotPrefix string
+	//BotName the name of the bot -Ceph-
+	BotName string
+	//EmbedColor the default color that the bot embeds it's messages with
 	EmbedColor int
 
 	config *configStruct

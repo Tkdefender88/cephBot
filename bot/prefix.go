@@ -1,6 +1,7 @@
 package bot
 
 import (
+	"github.com/Tkdefender88/cephBot/config"
 	"github.com/bwmarrin/discordgo"
 )
 
@@ -20,4 +21,18 @@ func setPrefix(s *discordgo.Session, m *discordgo.MessageCreate, msgList []strin
 		s.ChannelMessageSend(m.ChannelID, "Only the server owner can perform this magic trick!")
 		return
 	}
+
+	server := guildMap.Server[guild.ID]
+	server.CommandPrefix = msgList[1]
+
+	s.ChannelMessageSendEmbed(m.ChannelID, &discordgo.MessageEmbed{
+		Color: config.EmbedColor,
+		Fields: []*discordgo.MessageEmbedField{
+			{
+				Name:  "Prefix Changed",
+				Value: "Prefix set to " + msgList[1],
+			},
+		},
+	})
+	saveServers()
 }
