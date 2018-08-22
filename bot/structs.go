@@ -1,6 +1,9 @@
 package bot
 
-import "github.com/bwmarrin/discordgo"
+import (
+	"github.com/bwmarrin/discordgo"
+	"github.com/fogleman/gg"
+)
 
 //The result of an API call to the urbandictionary API
 type result struct {
@@ -17,11 +20,12 @@ type result struct {
 
 //a blank template for a meme
 type template struct {
-	name       string //identifies the meme acting as an id for now
-	filePath   string //defines where the meme template is
-	nTextBoxes int    //how many text boxes the meme can hold
-	textFields []*textField
-	wonb       bool
+	name       string  //identifies the meme acting as an id for now
+	filePath   string  //defines where the meme template is
+	nTextBoxes int     //how many text boxes the meme can hold
+	fontSize   float64 //how big is the text?
+	textFields []textField
+	wonb       bool //white text on black?
 }
 
 //a textfield that gets placed on a meme template
@@ -32,6 +36,7 @@ type textField struct {
 	ay        float64
 	width     float64
 	lineSpace float64
+	align     gg.Align
 }
 
 //A command that the bot can recognize

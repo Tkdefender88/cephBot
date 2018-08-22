@@ -51,7 +51,7 @@ var (
 		setPrefix}.add()
 	meme = command{
 		"meme",
-		"Args: `[template name] <text1> <text2> ... <textn>` Changes",
+		"Args: `[template name] <text1> <text2> ... <textn>` Changes\nIf no meme template is specified a list is DMed",
 		false,
 		false,
 		genMeme}.add()
