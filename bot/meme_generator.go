@@ -221,6 +221,13 @@ var (
 
 //parse the command and generate a meme
 func genMeme(s *discordgo.Session, m *discordgo.MessageCreate, msgList []string) {
+
+	if len(msgList) < 2 {
+		s.ChannelMessageSend(m.ChannelID, "I will send you a list of the templates")
+		listTemplates(s, m)
+		return
+	}
+
 	message := strings.Join(msgList[1:], " ")
 
 	//get the meme template based on the user argument
@@ -353,6 +360,47 @@ func getAuthorNick(s *discordgo.Session, m *discordgo.MessageCreate) (memeAuthor
 	}
 
 	return memeAuthor, nil
+}
+
+func listTemplates(s *discordgo.Session, m *discordgo.MessageCreate) {
+	dm, err := s.UserChannelCreate(m.Author.ID)
+	if err != nil {
+		s.ChannelMessageSend(m.ChannelID, "Could not open dm with you")
+		fmt.Println("Error opening dm channel: ", err)
+		return
+	}
+
+	for k, v := range templateMap {
+		meme, err := gg.LoadImage(v.filePath)
+		if err != nil {
+			fmt.Println("Error loading image: ", err)
+			continue
+		}
+
+		b := &bytes.Buffer{}
+		if err := png.Encode(b, meme); err != nil {
+			fmt.Println("Error ecoding image: ", err)
+			continue
+		}
+
+		e := &discordgo.MessageSend{
+			Embed: &discordgo.MessageEmbed{
+				Title: k,
+				Color: config.EmbedColor,
+				Image: &discordgo.MessageEmbedImage{
+					URL: "attachment://" + v.filePath,
+				},
+			},
+			Files: []*discordgo.File{
+				&discordgo.File{
+					Name:   v.filePath,
+					Reader: bytes.NewReader(b.Bytes()),
+				},
+			},
+		}
+
+		s.ChannelMessageSendComplex(dm.ID, e)
+	}
 }
 
 //Gets the meme template from the template map based on the name provided by the
