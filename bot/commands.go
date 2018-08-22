@@ -11,6 +11,8 @@ var (
 	pingpong   = command{"ping", "\"Pong!\"", false, false, ping}.add()
 	pongping   = command{"pong", "\"Ping!\"", false, false, ping}.add()
 	help       = command{"help", "", false, false, msgHelp}.add()
+	reqest     = command{"request", "request a feature", false, false, featureRequest}.add()
+	report     = command{"report", "report a bug", false, false, bugReport}.add()
 	celebrate  = command{
 		"woot",
 		"starts a celebration!",

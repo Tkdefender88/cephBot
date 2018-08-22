@@ -1,6 +1,7 @@
 package bot
 
 import (
+	"fmt"
 	"strings"
 
 	"github.com/Tkdefender88/cephBot/config"
@@ -65,4 +66,34 @@ func celebration(s *discordgo.Session, m *discordgo.MessageCreate, _ []string) {
 		":sparkles: Woot woot! Time to partay! YAY! :confetti_ball: :tada:",
 	)
 	s.ChannelMessageDelete(m.ChannelID, m.ID)
+}
+
+func featureRequest(s *discordgo.Session, m *discordgo.MessageCreate, msgList []string) {
+	if len(msgList) < 2 {
+		return
+	}
+
+	req := strings.Join(msgList[1:], " ")
+
+	dm, err := s.UserChannelCreate(juice)
+	if err != nil {
+		fmt.Println("Could not open dm")
+	}
+
+	s.ChannelMessageSend(dm.ID, ":pencil: `"+req+"` requested by: "+m.Author.Username+"#"+m.Author.Discriminator)
+}
+
+func bugReport(s *discordgo.Session, m *discordgo.MessageCreate, msgList []string) {
+	if len(msgList) < 2 {
+		return
+	}
+
+	report := strings.Join(msgList[1:], " ")
+
+	dm, err := s.UserChannelCreate(juice)
+	if err != nil {
+		fmt.Println("Could not open dm")
+	}
+
+	s.ChannelMessageSend(dm.ID, ":x: `"+report+"` reported by: "+m.Author.Username+"#"+m.Author.Discriminator)
 }
