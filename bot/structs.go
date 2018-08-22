@@ -59,3 +59,17 @@ type guild struct {
 	EmbedColor    int    `json:"embed_color"`
 	Kicked        bool   `json:"kicked"`
 }
+
+type xkcdComic struct {
+	Month      string `json:"month"`
+	Num        int    `json:"num"`
+	Link       string `json:"link"`
+	Year       string `json:"year"`
+	News       string `json:"news"`
+	SafeTitle  string `json:"safe_title"`
+	Transcript string `json:"transcript"`
+	Alt        string `json:"alt"`
+	Image      string `json:"img"`
+	Title      string `json:"title"`
+	Day        string `json:"day"`
+}

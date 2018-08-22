@@ -14,9 +14,10 @@ import (
 var (
 	guildMap = new(guilds)
 	//BotID the bot's ID
-	BotID string
-	goBot *discordgo.Session
-	juice = "146276564726841344" //I am the juice
+	BotID    string
+	goBot    *discordgo.Session
+	juice    = "146276564726841344" //I am the juice
+	greenmen = "157896922625998848"
 )
 
 //Start starts the bot session
