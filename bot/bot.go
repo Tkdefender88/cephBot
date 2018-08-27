@@ -21,16 +21,16 @@ var (
 )
 
 //Start starts the bot session
-func Start() {
+func Start() (*discordgo.Session, error) {
 	goBot, err := discordgo.New("Bot " + config.Token)
 	if err != nil {
 		fmt.Println(err.Error())
-		return
+		return nil, err
 	}
 	u, err := goBot.User("@me")
 	if err != nil {
 		fmt.Println(err.Error())
-		return
+		return nil, err
 	}
 	BotID = u.ID
 	if err := loadServers(); err != nil {
@@ -41,9 +41,10 @@ func Start() {
 	err = goBot.Open()
 	if err != nil {
 		fmt.Println(err.Error())
-		return
+		return nil, err
 	}
 	fmt.Println("Bot is running")
+	return goBot, nil
 }
 
 func loadServers() error {
