@@ -15,6 +15,8 @@ var (
 	BotName string
 	//EmbedColor the default color that the bot embeds it's messages with
 	EmbedColor int
+	//MentionID is the string that is made when someone mentions the bot
+	MentionID = "<@398399749192941568> "
 
 	config *configStruct
 )

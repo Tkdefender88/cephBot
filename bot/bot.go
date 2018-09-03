@@ -85,16 +85,23 @@ func saveJSON(path string, data interface{}) error {
 }
 
 func messageCreate(session *discordgo.Session, message *discordgo.MessageCreate) {
+	fmt.Println(message.Content)
 	if message.Author.ID == BotID {
 		return
 	}
 	guild, err := guildDetails(message.ChannelID, session)
+	var prefix string
 	if err != nil {
 		fmt.Println("Could not get the guild details")
+		prefix = config.BotPrefix
+	} else {
+		prefix = guildMap.Server[guild.ID].CommandPrefix
 	}
-	prefix := guildMap.Server[guild.ID].CommandPrefix
 	if strings.HasPrefix(message.Content, prefix) {
 		parseCommand(session, message, strings.TrimPrefix(message.Content, prefix))
+	}
+	if strings.HasPrefix(message.Content, config.MentionID) {
+		parseCommand(session, message, strings.TrimPrefix(message.Content, config.MentionID))
 	}
 }
 
