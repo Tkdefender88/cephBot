@@ -70,9 +70,10 @@ func giveStar(s *discordgo.Session, m *discordgo.MessageCreate, args []string) {
 		server := guildMap.Server[guild.ID]
 		userperms, err := permissionDetails(m.Author.ID, m.ChannelID, s)
 		hasPerms := userperms&discordgo.PermissionAdministrator > 0
-		if !hasPerms {
+		if server.LimitStars && !hasPerms {
 			s.ChannelMessageSend((m.ChannelID),
 				"Only the server owners can award stars")
+			return
 		}
 
 		//award the star
