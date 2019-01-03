@@ -84,7 +84,8 @@ func saveJSON(path string, data interface{}) error {
 }
 
 func messageCreate(s *discordgo.Session, m *discordgo.MessageCreate) {
-	//fmt.Println(message.Content)
+	fmt.Printf("%s#%s@%s: %s\n", m.Author.Username, m.Author.Discriminator,
+		m.ChannelID, message.Content)
 	if m.Author.ID == BotID {
 		return
 	}
