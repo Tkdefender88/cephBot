@@ -18,8 +18,24 @@ var (
 	}
 )
 
-//leetSpeak takes in a discord message and converts the characters to leet speak and sends the converted message to chat
-func leetSpeak(s *discordgo.Session, m *discordgo.MessageCreate, msgList []string) {
+func init() {
+	newCommand("leet", 0, false, false, leetSpeak).setHelp(
+		"`Args: [msg]`\nexample: `>leet it's lit fam` converts message to" +
+			" !7'5 1!7 f4m",
+	).add()
+}
+
+//leetSpeak takes in a discord message and converts the characters to leet speak
+//and sends the converted message to chat
+func leetSpeak(s *discordgo.Session, m *discordgo.MessageCreate,
+	msgList []string) {
+
+	if len(msgList) < 2 {
+		s.ChannelMessageSend(m.ChannelID,
+			"Please include a message for me to modify!")
+		return
+	}
+
 	//Leet string to build
 	leetMsg := ""
 	//turn their message into one complete string

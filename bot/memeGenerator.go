@@ -219,11 +219,42 @@ var (
 	}.addTemplate()
 )
 
+//a blank template for a meme
+type template struct {
+	name       string  //identifies the meme acting as an id for now
+	filePath   string  //defines where the meme template is
+	nTextBoxes int     //how many text boxes the meme can hold
+	fontSize   float64 //how big is the text?
+	textFields []textField
+	wonb       bool //white text on black?
+}
+
+//a textfield that gets placed on a meme template
+type textField struct {
+	x         float64
+	y         float64
+	ax        float64
+	ay        float64
+	width     float64
+	lineSpace float64
+	align     gg.Align
+}
+
+func init() {
+	newCommand("meme", 0, false, false, genMeme).setHelp(
+		"Args: `[template name] <text1> <text2> ... <textn>` \n\n select a" +
+			" template and add text to it to make your own meme!\n\nIf no" +
+			" meme is specified then a list is DMed to you",
+	).add()
+}
+
 //parse the command and generate a meme
-func genMeme(s *discordgo.Session, m *discordgo.MessageCreate, msgList []string) {
+func genMeme(s *discordgo.Session, m *discordgo.MessageCreate,
+	msgList []string) {
 
 	if len(msgList) < 2 {
-		s.ChannelMessageSend(m.ChannelID, "I will send you a list of the templates")
+		s.ChannelMessageSend(m.ChannelID,
+			"I will send you a list of the templates")
 		listTemplates(s, m)
 		return
 	}
@@ -303,7 +334,9 @@ func addText(t *template, args []string) (image.Image, error) {
 }
 
 //send the meme out after it's been created
-func sendMeme(s *discordgo.Session, m *discordgo.MessageCreate, img image.Image) {
+func sendMeme(s *discordgo.Session, m *discordgo.MessageCreate,
+	img image.Image) {
+
 	memeAuthor, err := getAuthorNick(s, m)
 	if err != nil {
 		s.ChannelMessageSend(m.ChannelID, "Could not resolve authors nickname")
@@ -340,7 +373,9 @@ func sendMeme(s *discordgo.Session, m *discordgo.MessageCreate, img image.Image)
 
 //Gets the meme creators nickname from the guild. If there is no nickname,
 //their user name is returned
-func getAuthorNick(s *discordgo.Session, m *discordgo.MessageCreate) (memeAuthor string, err error) {
+func getAuthorNick(s *discordgo.Session,
+	m *discordgo.MessageCreate) (memeAuthor string, err error) {
+
 	guild, err := guildDetails(m.ChannelID, s)
 	if err != nil {
 		fmt.Println("Could not resolve guild")
