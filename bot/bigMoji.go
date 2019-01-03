@@ -16,9 +16,8 @@ var (
 func init() {
 	newCommand("moji", 0, false, false, bigMoji).setHelp(
 		"Args: [emoji]\n\nPosts a large image of an emoji\nEmoji name must be" +
-			" in colon format \n\nExample: `>moji :smile:`\n If a `a` tag is" +
-			" given after an emoji then if the emoji given is animated then" +
-			" it will display animated and big",
+			" in colon format \n\nExample: `>moji :smile:`\n Animated emojis" +
+			" also will display larger and animated.",
 	).add()
 }
 
@@ -27,7 +26,6 @@ func init() {
 func bigMoji(s *discordgo.Session, m *discordgo.MessageCreate,
 	msgList []string) {
 
-	//If they don't provide an argument then we don't want to work with them
 	if len(msgList) < 2 {
 		s.ChannelMessageSend(m.ChannelID, "Must provide an emoji ex. `>moji"+
 			" :smile:`")
@@ -45,7 +43,8 @@ func bigMoji(s *discordgo.Session, m *discordgo.MessageCreate,
 	//into account if it's animated
 	var url string
 	file := "emoji"
-	if len(msgList) == 3 && msgList[2] == "a" {
+	//check if the emoji is animated
+	if msgList[1][1] == 'a' {
 		url = fmt.Sprintf("https://cdn.discordapp.com/emojis/%s.gif", match[2])
 		file += ".gif"
 	} else {
@@ -53,7 +52,6 @@ func bigMoji(s *discordgo.Session, m *discordgo.MessageCreate,
 		file += ".png"
 	}
 
-	//Hopefully this is where we get an acutall image to send.
 	resp, err := http.Get(url)
 	if err != nil {
 		fmt.Printf(err.Error())
@@ -62,7 +60,7 @@ func bigMoji(s *discordgo.Session, m *discordgo.MessageCreate,
 	defer resp.Body.Close()
 	//Send the big emoji we found and delete the message that called for it.
 	s.ChannelFileSend(m.ChannelID, file, resp.Body)
-	s.ChannelMessageDelete(m.ChannelID, m.ID)
+	//s.ChannelMessageDelete(m.ChannelID, m.ID)
 }
 
 //sendEmojiFromFile attemps to match a given string to a twemoji and send it in
