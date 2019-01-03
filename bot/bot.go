@@ -14,10 +14,9 @@ import (
 var (
 	guildMap = new(guilds)
 	//BotID the bot's ID
-	BotID    string
-	goBot    *discordgo.Session
-	juice    = "146276564726841344" //I am the juice
-	greenmen = "157896922625998848"
+	BotID string
+	goBot *discordgo.Session
+	juice = "146276564726841344" //I am the juice
 )
 
 //Start starts the bot session
@@ -84,12 +83,13 @@ func saveJSON(path string, data interface{}) error {
 	return nil
 }
 
-func messageCreate(session *discordgo.Session, message *discordgo.MessageCreate) {
-	fmt.Println(message.Content)
-	if message.Author.ID == BotID {
+func messageCreate(s *discordgo.Session, m *discordgo.MessageCreate) {
+	fmt.Printf("%s#%s@%s: %s\n", m.Author.Username, m.Author.Discriminator,
+		m.ChannelID, m.Content)
+	if m.Author.ID == BotID {
 		return
 	}
-	guild, err := guildDetails(message.ChannelID, session)
+	guild, err := guildDetails(m.ChannelID, s)
 	var prefix string
 	if err != nil {
 		fmt.Println("Could not get the guild details")
@@ -97,11 +97,11 @@ func messageCreate(session *discordgo.Session, message *discordgo.MessageCreate)
 	} else {
 		prefix = guildMap.Server[guild.ID].CommandPrefix
 	}
-	if strings.HasPrefix(message.Content, prefix) {
-		parseCommand(session, message, strings.TrimPrefix(message.Content, prefix))
+	if strings.HasPrefix(m.Content, prefix) {
+		parseCommand(s, m, strings.TrimPrefix(m.Content, prefix))
 	}
-	if strings.HasPrefix(message.Content, config.MentionID) {
-		parseCommand(session, message, strings.TrimPrefix(message.Content, config.MentionID))
+	if strings.HasPrefix(m.Content, config.MentionID) {
+		parseCommand(s, m, strings.TrimPrefix(m.Content, config.MentionID))
 	}
 }
 
@@ -120,6 +120,8 @@ func guildJoinEvent(s *discordgo.Session, g *discordgo.GuildCreate) {
 		}
 		fmt.Println("Joined new server: ", g.Guild.ID)
 	}
+
+	guildMap.Count++
 
 	saveServers()
 }

@@ -17,7 +17,31 @@ const (
 	xkcdMostRecent = "http://xkcd.com/info.0.json"
 )
 
-func getXkcd(s *discordgo.Session, m *discordgo.MessageCreate, msgList []string) {
+func init() {
+	newCommand("xkcd", 0, false, false, getXkcd).setHelp(
+		"Args: `<comic number>`\n fetches an xkcd comic from the interwebs\n" +
+			" Given a comic number it will fetch a specific comic. If left" +
+			" empty the newest comic is posted",
+	).add()
+}
+
+type xkcdComic struct {
+	Month      string `json:"month"`
+	Num        int    `json:"num"`
+	Link       string `json:"link"`
+	Year       string `json:"year"`
+	News       string `json:"news"`
+	SafeTitle  string `json:"safe_title"`
+	Transcript string `json:"transcript"`
+	Alt        string `json:"alt"`
+	Image      string `json:"img"`
+	Title      string `json:"title"`
+	Day        string `json:"day"`
+}
+
+func getXkcd(s *discordgo.Session, m *discordgo.MessageCreate,
+	msgList []string) {
+
 	var url string
 	if len(msgList) < 2 {
 		url = xkcdMostRecent
