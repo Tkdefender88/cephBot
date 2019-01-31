@@ -21,223 +21,25 @@ var (
 	fontPath    = "./memes/unicode.impact.ttf"
 )
 
-//TODO: add a .json file for the memes and a json parser to construct the map
-var (
-	rollsafe = template{
-		name:       "rollsafe",
-		filePath:   "./memes/roll_safe.jpg",
-		nTextBoxes: 2,
-		fontSize:   48,
-		wonb:       true,
-		textFields: []textField{
-			textField{
-				x:         351,
-				y:         50,
-				ax:        0.5,
-				ay:        0.2,
-				width:     600,
-				lineSpace: 1.5,
-				align:     gg.AlignCenter,
-			},
-			textField{
-				x:         351,
-				y:         345,
-				ax:        0.5,
-				ay:        0.9,
-				width:     600,
-				lineSpace: 1.5,
-				align:     gg.AlignCenter,
-			},
-		},
-	}.addTemplate()
-
-	brainExpand2 = template{
-		name:       "brainexpand2",
-		filePath:   "./memes/brain_expand_2.jpg",
-		nTextBoxes: 2,
-		fontSize:   48,
-		wonb:       false,
-		textFields: []textField{
-			textField{
-				x:         170,
-				y:         100,
-				ax:        0.5,
-				ay:        0.5,
-				width:     300,
-				lineSpace: 1.5,
-				align:     gg.AlignCenter,
-			},
-			textField{
-				x:         170,
-				y:         360,
-				ax:        0.5,
-				ay:        0.5,
-				width:     300,
-				lineSpace: 1.5,
-				align:     gg.AlignCenter,
-			},
-		},
-	}.addTemplate()
-
-	brainExpand3 = template{
-		name:       "brainexpand3",
-		filePath:   "./memes/brain_expand_3.jpg",
-		nTextBoxes: 3,
-		fontSize:   48,
-		wonb:       false,
-		textFields: []textField{
-			textField{
-				x:         214,
-				y:         150,
-				ax:        0.5,
-				ay:        0.5,
-				width:     300,
-				lineSpace: 1.5,
-				align:     gg.AlignCenter,
-			},
-			textField{
-				x:         214,
-				y:         430,
-				ax:        0.5,
-				ay:        0.5,
-				width:     300,
-				lineSpace: 1.5,
-				align:     gg.AlignCenter,
-			},
-			textField{
-				x:         214,
-				y:         750,
-				ax:        0.5,
-				ay:        0.5,
-				width:     300,
-				lineSpace: 1.5,
-				align:     gg.AlignCenter,
-			},
-		},
-	}.addTemplate()
-
-	percy = template{
-		name:       "percy",
-		filePath:   "memes/percy.png",
-		nTextBoxes: 1,
-		wonb:       true,
-		fontSize:   32,
-		textFields: []textField{
-			textField{
-				x:         30,
-				y:         120,
-				ax:        0,
-				ay:        0.5,
-				width:     300,
-				lineSpace: 1.2,
-				align:     gg.AlignLeft,
-			},
-		},
-	}.addTemplate()
-
-	rainbow = template{
-		name:       "rainbowface",
-		filePath:   "memes/rainbow_face.jpg",
-		nTextBoxes: 1,
-		fontSize:   48,
-		wonb:       false,
-		textFields: []textField{
-			textField{
-				x:         450,
-				y:         460,
-				ax:        0.5,
-				ay:        0.5,
-				width:     850,
-				lineSpace: 1.5,
-				align:     gg.AlignCenter,
-			},
-		},
-	}.addTemplate()
-
-	pigeon = template{
-		name:       "pigeon",
-		fontSize:   36,
-		filePath:   "memes/isthisapigeon.png",
-		nTextBoxes: 3,
-		textFields: []textField{
-			textField{ //is this a _
-				x:         380,
-				y:         380,
-				ax:        0.5,
-				ay:        0.5,
-				width:     200,
-				lineSpace: 1.5,
-				align:     gg.AlignLeft,
-			},
-			textField{ //The butterfly
-				x:         400,
-				y:         50,
-				ax:        0.5,
-				ay:        0.5,
-				width:     200,
-				lineSpace: 1.5,
-				align:     gg.AlignCenter,
-			},
-			textField{ //Face
-				x:         150,
-				y:         100,
-				ax:        0.5,
-				ay:        0.5,
-				width:     200,
-				lineSpace: 1.5,
-				align:     gg.AlignCenter,
-			},
-		},
-		wonb: true,
-	}.addTemplate()
-
-	changeMind = template{
-		name:       "changemymind",
-		fontSize:   32,
-		filePath:   "memes/change_my_mind.jpg",
-		nTextBoxes: 1,
-		wonb:       false,
-		textFields: []textField{
-			textField{
-				x:         320,
-				y:         250,
-				ax:        0.5,
-				ay:        0.5,
-				width:     270,
-				lineSpace: 1.5,
-				align:     gg.AlignCenter,
-			},
-		},
-	}.addTemplate()
-
-	guessIm = template{
-		name:       "guessIm",
-		fontSize:   36,
-		filePath:   "memes/I_guess_Im.jpg",
-		nTextBoxes: 0,
-		wonb:       false,
-	}.addTemplate()
-)
-
 //a blank template for a meme
 type template struct {
-	name       string  //identifies the meme acting as an id for now
-	filePath   string  //defines where the meme template is
-	nTextBoxes int     //how many text boxes the meme can hold
-	fontSize   float64 //how big is the text?
-	textFields []textField
-	wonb       bool //white text on black?
+	Name       string  //identifies the meme acting as an id for now
+	FilePath   string  //defines where the meme template is
+	NTextBoxes int     //how many text boxes the meme can hold
+	FontSize   float64 //how big is the text?
+	TextFields []textField
+	Wonb       bool //white text on black?
 }
 
 //a textfield that gets placed on a meme template
 type textField struct {
-	x         float64
-	y         float64
-	ax        float64
-	ay        float64
-	width     float64
-	lineSpace float64
-	align     gg.Align
+	X         float64
+	Y         float64
+	AX        float64
+	AY        float64
+	Width     float64
+	LineSpace float64
+	Align     gg.Align
 }
 
 func init() {
@@ -246,6 +48,9 @@ func init() {
 			" template and add text to it to make your own meme!\n\nIf no" +
 			" meme is specified then a list is DMed to you",
 	).add()
+	if err := Load("./json/memes.json", &templateMap); err != nil {
+		fmt.Println(err)
+	}
 }
 
 //parse the command and generate a meme
@@ -288,7 +93,7 @@ func genMeme(s *discordgo.Session, m *discordgo.MessageCreate,
 
 //Adds text to a meme template
 func addText(t *template, args []string) (image.Image, error) {
-	image, err := gg.LoadImage(t.filePath)
+	image, err := gg.LoadImage(t.FilePath)
 	if err != nil {
 		fmt.Println("Could not load the image")
 		return image, err
@@ -299,34 +104,34 @@ func addText(t *template, args []string) (image.Image, error) {
 
 	context := gg.NewContextForImage(image)
 
-	if t.wonb {
+	if t.Wonb {
 		context.SetRGB(1, 1, 1)
 	} else {
 		context.SetRGB(0, 0, 0)
 	}
-	if err := context.LoadFontFace("memes/impact.ttf", t.fontSize); err != nil {
+	if err := context.LoadFontFace("memes/impact.ttf", t.FontSize); err != nil {
 		fmt.Println("Could not load the font: ", err)
 	}
 	fmt.Println(imageWidth, imageHeight)
 
 	var min int
-	if t.nTextBoxes < len(args) {
-		min = t.nTextBoxes
+	if t.NTextBoxes < len(args) {
+		min = t.NTextBoxes
 	} else {
 		min = len(args)
 	}
 
 	for i := 0; i < min; i++ {
-		tf := t.textFields[i]
+		tf := t.TextFields[i]
 		context.DrawStringWrapped(
 			args[i],
-			tf.x,
-			tf.y,
-			tf.ax,
-			tf.ay,
-			tf.width,
-			tf.lineSpace,
-			tf.align,
+			tf.X,
+			tf.Y,
+			tf.AX,
+			tf.AY,
+			tf.Width,
+			tf.LineSpace,
+			tf.Align,
 		)
 	}
 
@@ -406,7 +211,7 @@ func listTemplates(s *discordgo.Session, m *discordgo.MessageCreate) {
 	}
 
 	for k, v := range templateMap {
-		meme, err := gg.LoadImage(v.filePath)
+		meme, err := gg.LoadImage(v.FilePath)
 		if err != nil {
 			fmt.Println("Error loading image: ", err)
 			continue
@@ -423,12 +228,12 @@ func listTemplates(s *discordgo.Session, m *discordgo.MessageCreate) {
 				Title: k,
 				Color: config.EmbedColor,
 				Image: &discordgo.MessageEmbedImage{
-					URL: "attachment://" + v.filePath,
+					URL: "attachment://" + v.FilePath,
 				},
 			},
 			Files: []*discordgo.File{
 				&discordgo.File{
-					Name:   v.filePath,
+					Name:   v.FilePath,
 					Reader: bytes.NewReader(b.Bytes()),
 				},
 			},
@@ -443,7 +248,7 @@ func listTemplates(s *discordgo.Session, m *discordgo.MessageCreate) {
 func getTemplate(name string) (*template, error) {
 	name = strings.ToLower(name)
 	if _, ok := templateMap[name]; ok {
-		if name == strings.ToLower(templateMap[name].name) {
+		if name == strings.ToLower(templateMap[name].Name) {
 			t := templateMap[name]
 			return t, nil
 		}
@@ -453,6 +258,6 @@ func getTemplate(name string) (*template, error) {
 
 //Adds a template to the map
 func (t template) addTemplate() template {
-	templateMap[strings.ToLower(t.name)] = &t
+	templateMap[strings.ToLower(t.Name)] = &t
 	return t
 }
