@@ -1,10 +1,7 @@
 package bot
 
 import (
-	"encoding/json"
 	"fmt"
-	"io/ioutil"
-	"os"
 	"strings"
 
 	"github.com/Tkdefender88/cephBot/config"
@@ -48,41 +45,14 @@ func Start() (*discordgo.Session, error) {
 
 func loadServers() error {
 	guildMap.Server = make(map[string]*guild)
-	return loadJSON("servers.json", guildMap)
+	return Load("json/servers.json", guildMap)
 }
 
 func saveServers() error {
-	return saveJSON("servers.json", guildMap)
+	return Save("json/servers.json", guildMap)
 }
 
-func loadJSON(path string, v interface{}) error {
-	file, err := os.OpenFile("json/"+path, os.O_RDONLY, 0600)
-	if err != nil {
-		fmt.Println("Could not open the file: ", path, err)
-		return err
-	}
-	defer file.Close()
-	if err := json.NewDecoder(file).Decode(v); err != nil {
-		fmt.Println("Could not load the json", path, err)
-		return err
-	}
-	return nil
-}
-
-func saveJSON(path string, data interface{}) error {
-	bytes, err := json.Marshal(data)
-	if err != nil {
-		fmt.Println("Could not marshal guildMap into json")
-	}
-
-	if err := ioutil.WriteFile("json/"+path, bytes, 0600); err != nil {
-		fmt.Println("Could not write to file: ", err)
-		return err
-	}
-
-	return nil
-}
-
+//Event handler for message recieve events
 func messageCreate(s *discordgo.Session, m *discordgo.MessageCreate) {
 	fmt.Printf("%s#%s@%s: %s\n", m.Author.Username, m.Author.Discriminator,
 		m.ChannelID, m.Content)
@@ -105,6 +75,7 @@ func messageCreate(s *discordgo.Session, m *discordgo.MessageCreate) {
 	}
 }
 
+//Event handler for guild join events
 func guildJoinEvent(s *discordgo.Session, g *discordgo.GuildCreate) {
 	if g.Unavailable {
 		fmt.Println("tried to join an unavailable guild: ", g.Guild.ID)
@@ -118,10 +89,8 @@ func guildJoinEvent(s *discordgo.Session, g *discordgo.GuildCreate) {
 			EmbedColor:    config.EmbedColor,
 			Kicked:        false,
 		}
+		guildMap.Count++
 		fmt.Println("Joined new server: ", g.Guild.ID)
 	}
-
-	guildMap.Count++
-
 	saveServers()
 }
