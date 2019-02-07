@@ -8,6 +8,7 @@ json/
 *.o
 *.a
 *.so
+ceph
 
 # Folders
 _obj

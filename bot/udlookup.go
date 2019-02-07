@@ -16,7 +16,40 @@ const (
 	apiVersion string = "v0"
 )
 
-func udLookup(s *discordgo.Session, m *discordgo.MessageCreate, msgList []string) {
+//The result of an API call to the urbandictionary API
+type result struct {
+	LookupList []struct {
+		Word       string `json:"word"`
+		Definition string `json:"definition"`
+		Example    string `json:"example"`
+		Author     string `json:"author"`
+		Thumbup    int    `json:"thumbs_up"`
+		Thumbdown  int    `json:"thumbs_down"`
+	} `json:"list"`
+	ResultType string `json:"result_type"`
+}
+
+func init() {
+	newCommand("ud", 0, false, false, udLookup).setHelp(
+		"Search words on urban dictionary using `>ud [search word]`",
+	).add()
+}
+
+func udLookup(s *discordgo.Session, m *discordgo.MessageCreate,
+	msgList []string) {
+
+	channel, err := channelDetails(m.ChannelID, s)
+	if err != nil {
+		s.ChannelMessageSend(m.ChannelID, "Could not get channel details")
+		return
+	}
+
+	if !channel.NSFW {
+		s.ChannelMessageSend(m.ChannelID,
+			"Cannot post Urban dictionary to Non-NSFW channels :(")
+		return
+	}
+
 	//The search in the url needs to have words joined by plus signs
 	search := strings.Join(msgList[1:], "+")
 	url := fmt.Sprintf("%s/%s/define?term=%s", udAPIBase, apiVersion, search)
@@ -48,8 +81,9 @@ func udLookup(s *discordgo.Session, m *discordgo.MessageCreate, msgList []string
 
 			Fields: []*discordgo.MessageEmbedField{
 				{
-					Name:  "Error",
-					Value: "Sorry that definition is too large for a discord embed. RIP",
+					Name: "Error",
+					Value: "Sorry that definition is too large for a discord" +
+						" embed. RIP",
 				},
 			},
 		})
@@ -58,7 +92,9 @@ func udLookup(s *discordgo.Session, m *discordgo.MessageCreate, msgList []string
 	embedUDresult(s, m, res)
 }
 
-func embedUDresult(s *discordgo.Session, m *discordgo.MessageCreate, data *result) {
+func embedUDresult(s *discordgo.Session, m *discordgo.MessageCreate,
+	data *result) {
+
 	lookup := data.LookupList[0]
 	rating := fmt.Sprintf(":+1:`%d` :-1:`%d`", lookup.Thumbup, lookup.Thumbdown)
 	s.ChannelMessageSendEmbed(m.ChannelID, &discordgo.MessageEmbed{
@@ -86,8 +122,8 @@ func embedUDresult(s *discordgo.Session, m *discordgo.MessageCreate, data *resul
 	})
 }
 
-//Sends an HTTP get request to the urban dictionary api and returns the json data that it
-//receives as a response
+//Sends an HTTP get request to the urban dictionary api and returns the json
+//data that it receives as a response
 func searchUD(url string) (body []byte) {
 	data, err := http.Get(url)
 	if err != nil {

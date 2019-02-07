@@ -1,10 +1,7 @@
 package bot
 
 import (
-	"encoding/json"
 	"fmt"
-	"io/ioutil"
-	"os"
 	"strconv"
 	"strings"
 
@@ -51,47 +48,21 @@ func Start() (*discordgo.Session, error) {
 
 func loadServers() error {
 	guildMap.Server = make(map[string]*guild)
-	return loadJSON("servers.json", guildMap)
+	return Load("json/servers.json", guildMap)
 }
 
 func saveServers() error {
-	return saveJSON("servers.json", guildMap)
+	return Save("json/servers.json", guildMap)
 }
 
-func loadJSON(path string, v interface{}) error {
-	file, err := os.OpenFile("json/"+path, os.O_RDONLY, 0600)
-	if err != nil {
-		fmt.Println("Could not open the file: ", path, err)
-		return err
-	}
-	defer file.Close()
-	if err := json.NewDecoder(file).Decode(v); err != nil {
-		fmt.Println("Could not load the json", path, err)
-		return err
-	}
-	return nil
-}
-
-func saveJSON(path string, data interface{}) error {
-	bytes, err := json.Marshal(data)
-	if err != nil {
-		fmt.Println("Could not marshal guildMap into json")
-	}
-
-	if err := ioutil.WriteFile("json/"+path, bytes, 0600); err != nil {
-		fmt.Println("Could not write to file: ", err)
-		return err
-	}
-
-	return nil
-}
-
-func messageCreate(session *discordgo.Session, message *discordgo.MessageCreate) {
-	fmt.Println(message.Content)
-	if message.Author.ID == BotID {
+//Event handler for message recieve events
+func messageCreate(s *discordgo.Session, m *discordgo.MessageCreate) {
+	fmt.Printf("%s#%s@%s: %s\n", m.Author.Username, m.Author.Discriminator,
+		m.ChannelID, m.Content)
+	if m.Author.ID == BotID {
 		return
 	}
-	guild, err := guildDetails(message.ChannelID, session)
+	guild, err := guildDetails(m.ChannelID, s)
 	var prefix string
 	if err != nil {
 		fmt.Println("Could not get the guild details")
@@ -99,21 +70,22 @@ func messageCreate(session *discordgo.Session, message *discordgo.MessageCreate)
 	} else {
 		prefix = guildMap.Server[guild.ID].CommandPrefix
 	}
-	if strings.HasPrefix(message.Content, prefix) {
-		parseCommand(session, message, strings.TrimPrefix(message.Content, prefix))
+	if strings.HasPrefix(m.Content, prefix) {
+		parseCommand(s, m, strings.TrimPrefix(m.Content, prefix))
 	}
-	if strings.HasPrefix(message.Content, config.MentionID) {
-		parseCommand(session, message, strings.TrimPrefix(message.Content, config.MentionID))
+	if strings.HasPrefix(m.Content, config.MentionID) {
+		parseCommand(s, m, strings.TrimPrefix(m.Content, config.MentionID))
 	}
-	if message.ChannelID == countChan {
-		i, err := strconv.Atoi(message.Content)
+	if m.ChannelID == countChan {
+		i, err := strconv.Atoi(m.Content)
 		if err != nil {
 			return
 		}
-		session.ChannelMessageSend(message.ChannelID, strconv.Itoa(i+1))
+		s.ChannelMessageSend(m.ChannelID, strconv.Itoa(i+1))
 	}
 }
 
+//Event handler for guild join events
 func guildJoinEvent(s *discordgo.Session, g *discordgo.GuildCreate) {
 	if g.Unavailable {
 		fmt.Println("tried to join an unavailable guild: ", g.Guild.ID)
@@ -127,8 +99,8 @@ func guildJoinEvent(s *discordgo.Session, g *discordgo.GuildCreate) {
 			EmbedColor:    config.EmbedColor,
 			Kicked:        false,
 		}
+		guildMap.Count++
 		fmt.Println("Joined new server: ", g.Guild.ID)
 	}
-
 	saveServers()
 }
