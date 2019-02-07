@@ -76,7 +76,8 @@ func genMeme(s *discordgo.Session, m *discordgo.MessageCreate,
 
 	//find all the text arguments in the command based on the regular expression
 	arguments := memeRegex.FindAllString(message, -1)
-	for i, arg := range arguments { //remove the quotes from each block of text
+	//remove the quotes from each block of text
+	for i, arg := range arguments {
 		arguments[i] = arg[1 : len(arg)-1]
 	}
 
@@ -85,6 +86,7 @@ func genMeme(s *discordgo.Session, m *discordgo.MessageCreate,
 		fmt.Println("Could not make the meme")
 		return
 	}
+
 	sendMeme(s, m, meme)
 	if err := s.ChannelMessageDelete(m.ChannelID, m.ID); err != nil {
 		log.Println("failed deleting message: ", err)
@@ -134,7 +136,6 @@ func addText(t *template, args []string) (image.Image, error) {
 			tf.Align,
 		)
 	}
-
 	return context.Image(), nil
 }
 
