@@ -2,6 +2,7 @@ package bot
 
 import (
 	"fmt"
+	"strconv"
 	"strings"
 
 	"github.com/Tkdefender88/cephBot/config"
@@ -11,9 +12,11 @@ import (
 var (
 	guildMap = new(guilds)
 	//BotID the bot's ID
-	BotID string
-	goBot *discordgo.Session
-	juice = "146276564726841344" //I am the juice
+	BotID     string
+	goBot     *discordgo.Session
+	juice     = "146276564726841344" //I am the juice
+	greenmen  = "157896922625998848"
+	countChan = "247919139467952128"
 )
 
 //Start starts the bot session
@@ -72,6 +75,13 @@ func messageCreate(s *discordgo.Session, m *discordgo.MessageCreate) {
 	}
 	if strings.HasPrefix(m.Content, config.MentionID) {
 		parseCommand(s, m, strings.TrimPrefix(m.Content, config.MentionID))
+	}
+	if m.ChannelID == countChan {
+		i, err := strconv.Atoi(m.Content)
+		if err != nil {
+			return
+		}
+		s.ChannelMessageSend(m.ChannelID, strconv.Itoa(i+1))
 	}
 }
 

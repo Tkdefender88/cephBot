@@ -24,6 +24,20 @@ func guildDetails(cID string, s *discordgo.Session) (*discordgo.Guild, error) {
 	return guildDetails, nil
 }
 
+func msgDetails(mID, cID string, s *discordgo.Session) (*discordgo.Message, error) {
+
+	msg, err := s.State.Message(cID, mID)
+	if err != nil {
+		if err == discordgo.ErrStateNotFound {
+			msg, err = s.ChannelMessage(cID, mID)
+			if err != nil {
+				return nil, err
+			}
+		}
+	}
+	return msg, nil
+}
+
 func channelDetails(cID string,
 	s *discordgo.Session) (*discordgo.Channel, error) {
 

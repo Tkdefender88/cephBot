@@ -2,6 +2,8 @@ package bot
 
 import (
 	"fmt"
+	"log"
+	"strconv"
 	"strings"
 
 	"github.com/Tkdefender88/cephBot/config"
@@ -22,6 +24,24 @@ func init() {
 		"Report a bug.").add()
 	newCommand("celebrate", 0, false, false, celebration).setHelp(
 		"Starts a celebration!").add()
+	newCommand("count", 0, true, true, count).add()
+}
+
+func count(s *discordgo.Session, m *discordgo.MessageCreate, message []string) {
+	c, err := channelDetails(countChan, s)
+	if err != nil {
+		log.Println(err.Error())
+		return
+	}
+	msg, err := msgDetails(c.LastMessageID, countChan, s)
+	if err != nil {
+		return
+	}
+	i, err := strconv.Atoi(msg.Content)
+	if err != nil {
+		return
+	}
+	s.ChannelMessageSend(countChan, strconv.Itoa(i+1))
 }
 
 //ping is basically the hello world test of this whole monstrosity... it worked
