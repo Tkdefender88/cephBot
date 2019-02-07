@@ -16,7 +16,7 @@ var (
 	goBot     *discordgo.Session
 	juice     = "146276564726841344" //I am the juice
 	greenmen  = "157896922625998848"
-	countChan = "542855640897552394"
+	countChan = "247919139467952128"
 )
 
 //Start starts the bot session
