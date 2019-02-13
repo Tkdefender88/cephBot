@@ -18,8 +18,8 @@ func init() {
 	newCommand("git", 0, false, false, gitHubLink).setHelp(
 		"Displays the github link where I'm being developed.",
 	).add()
-	newCommand("request", 0, false, false, featureRequest).setHelp(
-		"Requests a feature.").add()
+	/*newCommand("request", 0, false, false, featureRequest).setHelp(
+	"Requests a feature.").add()*/
 	newCommand("report", 0, false, false, bugReport).setHelp(
 		"Report a bug.").add()
 	newCommand("celebrate", 0, false, false, celebration).setHelp(
