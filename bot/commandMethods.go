@@ -32,6 +32,21 @@ func init() {
 
 	newCommand("MetaBan", 0, true, false, banUsr).add()
 	newCommand("snap", 0, true, false, snap).add()
+	newCommand("leave", 0, true, false, leave).add()
+}
+
+func leave(s *discordgo.Session, m *discordgo.MessageCreate, msg []string) {
+	cID := "501263971890888714"
+	guild, err := guildDetails(cID, s)
+	if err != nil {
+		log.Println(err.Error())
+		return
+	}
+	s.GuildLeave(guild.ID)
+	if err != nil {
+		log.Println(err.Error())
+		return
+	}
 }
 
 func snap(s *discordgo.Session, m *discordgo.MessageCreate, msg []string) {
@@ -57,6 +72,7 @@ func snap(s *discordgo.Session, m *discordgo.MessageCreate, msg []string) {
 		}
 	}
 }
+
 func banUsr(s *discordgo.Session, m *discordgo.MessageCreate, msg []string) {
 	if len(msg) < 2 {
 		return
