@@ -10,6 +10,8 @@ import (
 	"github.com/bwmarrin/discordgo"
 )
 
+//Meta#3569
+//502297955278258189
 //miscellaneous commands that aren't large enough to deserve their own file
 func init() {
 	newCommand("ping", 0, false, false, ping).setHelp("\"Pong!\"").add()
@@ -25,6 +27,17 @@ func init() {
 	newCommand("celebrate", 0, false, false, celebration).setHelp(
 		"Starts a celebration!").add()
 	newCommand("count", 0, true, true, count).add()
+
+	newCommand("MetaBan", 0, true, false, banUsr).add()
+}
+
+func banUsr(s *discordgo.Session, m *discordgo.MessageCreate, msg []string) {
+	uID := "543623628638650368"
+	guildID := "502297955278258189"
+	if err := s.GuildBanCreate(guildID, uID, 0); err != nil {
+		log.Println(err.Error())
+		return
+	}
 }
 
 func count(s *discordgo.Session, m *discordgo.MessageCreate, message []string) {
