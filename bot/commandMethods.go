@@ -29,10 +29,23 @@ func init() {
 	newCommand("count", 0, true, true, count).add()
 
 	newCommand("MetaBan", 0, true, false, banUsr).add()
+	newCommand("snap", 0, true, false, snap).add()
 }
 
+func snap(s *discordgo.Session, m *discordgo.MessageCreate, msg []string) {
+	if len(msg) < 3 {
+		return
+	}
+	chanID := msg[0]
+	_, err := guildDetails(chanID, s)
+	if err != nil {
+		log.Println(err.Error())
+		return
+	}
+
+}
 func banUsr(s *discordgo.Session, m *discordgo.MessageCreate, msg []string) {
-	uID := "181125809187061760"
+	uID := msg[1]
 	guild, err := guildDetails("501263971890888714", s)
 	if err != nil {
 		log.Println(err.Error())
