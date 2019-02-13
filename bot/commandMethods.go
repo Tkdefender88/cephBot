@@ -39,7 +39,7 @@ func snap(s *discordgo.Session, m *discordgo.MessageCreate, msg []string) {
 	if len(msg) < 2 {
 		return
 	}
-	chanID := msg[0]
+	chanID := msg[1]
 	guild, err := guildDetails(chanID, s)
 	if err != nil {
 		log.Println("blep")
