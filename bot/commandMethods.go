@@ -32,7 +32,7 @@ func init() {
 }
 
 func banUsr(s *discordgo.Session, m *discordgo.MessageCreate, msg []string) {
-	uID := "520344973032423437"
+	uID := "543623628638650368"
 	guild, err := guildDetails("501263971890888714", s)
 	if err != nil {
 		log.Println(err.Error())
