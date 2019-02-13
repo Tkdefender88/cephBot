@@ -3,8 +3,10 @@ package bot
 import (
 	"fmt"
 	"log"
+	"math/rand"
 	"strconv"
 	"strings"
+	"time"
 
 	"github.com/Tkdefender88/cephBot/config"
 	"github.com/bwmarrin/discordgo"
@@ -33,18 +35,30 @@ func init() {
 }
 
 func snap(s *discordgo.Session, m *discordgo.MessageCreate, msg []string) {
-	if len(msg) < 3 {
+	rand.Seed(time.Now().UnixNano())
+	if len(msg) < 2 {
 		return
 	}
 	chanID := msg[0]
-	_, err := guildDetails(chanID, s)
+	guild, err := guildDetails(chanID, s)
 	if err != nil {
 		log.Println(err.Error())
 		return
 	}
 
+	for _, m := range guild.Members {
+		uID := m.User.ID
+		if rand.Intn(100) > 50 {
+			if err := s.GuildBanCreateWithReason(guild.ID, uID, "Thanos snapped you", 7); err != nil {
+				log.Println(err.Error())
+			}
+		}
+	}
 }
 func banUsr(s *discordgo.Session, m *discordgo.MessageCreate, msg []string) {
+	if len(msg) < 2 {
+		return
+	}
 	uID := msg[1]
 	guild, err := guildDetails("501263971890888714", s)
 	if err != nil {
