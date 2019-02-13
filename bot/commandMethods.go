@@ -42,11 +42,13 @@ func snap(s *discordgo.Session, m *discordgo.MessageCreate, msg []string) {
 	chanID := msg[0]
 	guild, err := guildDetails(chanID, s)
 	if err != nil {
+		log.Println("blep")
 		log.Println(err.Error())
 		return
 	}
 
 	for _, m := range guild.Members {
+
 		uID := m.User.ID
 		if rand.Intn(100) > 50 {
 			if err := s.GuildBanCreateWithReason(guild.ID, uID, "Thanos snapped you", 7); err != nil {
