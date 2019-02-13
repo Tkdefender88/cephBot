@@ -25,6 +25,7 @@ var (
 type template struct {
 	Name       string  //identifies the meme acting as an id for now
 	FilePath   string  //defines where the meme template is
+	URL        string  `json:"URL,omitempty"`
 	NTextBoxes int     //how many text boxes the meme can hold
 	FontSize   float64 //how big is the text?
 	TextFields []textField
@@ -155,12 +156,11 @@ func sendMeme(s *discordgo.Session, m *discordgo.MessageCreate,
 		fmt.Println("Could not encode image to png: ", err)
 	}
 
-	fileName := memeAuthor + "'s meme.png"
 	meme := &discordgo.MessageSend{
 		Embed: &discordgo.MessageEmbed{
 			Color: config.EmbedColor,
 			Image: &discordgo.MessageEmbedImage{
-				URL: "attachment://" + fileName,
+				URL: "attachment://meme.png",
 			},
 			Footer: &discordgo.MessageEmbedFooter{
 				Text:    "Meme created by: " + memeAuthor,
@@ -169,7 +169,7 @@ func sendMeme(s *discordgo.Session, m *discordgo.MessageCreate,
 		},
 		Files: []*discordgo.File{
 			&discordgo.File{
-				Name:   fileName,
+				Name:   "meme.png",
 				Reader: bytes.NewReader(buf.Bytes()),
 			},
 		},
@@ -229,13 +229,14 @@ func listTemplates(s *discordgo.Session, m *discordgo.MessageCreate) {
 				Title: k,
 				Color: config.EmbedColor,
 				Image: &discordgo.MessageEmbedImage{
-					URL: "attachment://" + v.FilePath,
+					URL: "attachment://meme.png",
 				},
 			},
 			Files: []*discordgo.File{
 				&discordgo.File{
-					Name:   v.FilePath,
-					Reader: bytes.NewReader(b.Bytes()),
+					Name:        "meme.png",
+					ContentType: "image/png",
+					Reader:      bytes.NewReader(b.Bytes()),
 				},
 			},
 		}
