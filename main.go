@@ -1,26 +1,22 @@
 package main
 
 import (
+	"flag"
 	"fmt"
 	"os"
 	"os/signal"
 	"syscall"
 
 	"github.com/Tkdefender88/cephBot/bot"
-	"github.com/Tkdefender88/cephBot/config"
 )
 
-const token string = ""
-
 func main() {
-	err := config.ReadConfig()
-	if err != nil {
-		fmt.Println(err.Error())
-		return
-	}
 
+	testing := flag.Bool("test", false, "Runs the bot testCeph.")
+
+	flag.Parse()
 	//Start up the bot
-	goBot, err := bot.Start()
+	goBot, err := bot.Start(*testing)
 	if err != nil {
 		fmt.Println(err.Error())
 		return

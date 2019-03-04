@@ -7,7 +7,6 @@ import (
 	"net/http"
 	"strings"
 
-	"github.com/Tkdefender88/cephBot/config"
 	"github.com/bwmarrin/discordgo"
 )
 
@@ -64,7 +63,7 @@ func udLookup(s *discordgo.Session, m *discordgo.MessageCreate,
 	//If no result is found then send an error message to chat and stop.
 	if res.ResultType == "no_results" {
 		s.ChannelMessageSendEmbed(m.ChannelID, &discordgo.MessageEmbed{
-			Color: config.EmbedColor,
+			Color: embedColor,
 
 			Fields: []*discordgo.MessageEmbedField{
 				{
@@ -77,7 +76,7 @@ func udLookup(s *discordgo.Session, m *discordgo.MessageCreate,
 	}
 	if len(res.LookupList[0].Definition) > 1024 {
 		s.ChannelMessageSendEmbed(m.ChannelID, &discordgo.MessageEmbed{
-			Color: config.EmbedColor,
+			Color: embedColor,
 
 			Fields: []*discordgo.MessageEmbedField{
 				{
@@ -98,7 +97,7 @@ func embedUDresult(s *discordgo.Session, m *discordgo.MessageCreate,
 	lookup := data.LookupList[0]
 	rating := fmt.Sprintf(":+1:`%d` :-1:`%d`", lookup.Thumbup, lookup.Thumbdown)
 	s.ChannelMessageSendEmbed(m.ChannelID, &discordgo.MessageEmbed{
-		Color: config.EmbedColor,
+		Color: embedColor,
 		Fields: []*discordgo.MessageEmbedField{
 			{
 				Name:  "Definition",

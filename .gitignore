@@ -1,7 +1,6 @@
-config.json
+env.list
 .vscode
 json/
-/bot/spamTrevor.go
 /emoji
 /memes
 # Compiled Object files, Static and Dynamic libs (Shared Objects)
@@ -9,6 +8,9 @@ json/
 *.a
 *.so
 ceph
+
+#docker compose
+docker-compose.yml
 
 # Folders
 _obj
@@ -30,22 +32,11 @@ _testmain.go
 *.test
 *.prof
 
-# WebStorm
-*.iml
-
-# Directory-based project format:
-.idea/
-.idea/workspace.xml
-**/.idea/workspace.xml
-
 # mac hidden files
 .DS_Store
 
 #other
-node_modules/
-bower_components/
 .tmp
-.sass-cache
 builds/**/images/*
 *.ogg
 *.mp3
