@@ -9,6 +9,9 @@ json/
 *.so
 ceph
 
+#docker compose
+docker-compose.yml
+
 # Folders
 _obj
 _test
