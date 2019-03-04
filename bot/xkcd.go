@@ -7,7 +7,6 @@ import (
 	"net/http"
 	"strconv"
 
-	"github.com/Tkdefender88/cephBot/config"
 	"github.com/bwmarrin/discordgo"
 )
 
@@ -69,7 +68,7 @@ func getXkcd(s *discordgo.Session, m *discordgo.MessageCreate,
 	}
 
 	_, err = s.ChannelMessageSendEmbed(m.ChannelID, &discordgo.MessageEmbed{
-		Color: config.EmbedColor,
+		Color: embedColor,
 		Fields: []*discordgo.MessageEmbedField{
 			{
 				Name:   "Title",

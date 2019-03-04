@@ -6,7 +6,6 @@ import (
 	"strconv"
 	"strings"
 
-	"github.com/Tkdefender88/cephBot/config"
 	"github.com/bwmarrin/discordgo"
 )
 
@@ -81,12 +80,12 @@ func msgHelp(s *discordgo.Session, m *discordgo.MessageCreate,
 	}
 
 	s.ChannelMessageSendEmbed(m.ChannelID, &discordgo.MessageEmbed{
-		Color: config.EmbedColor,
+		Color: embedColor,
 		Fields: []*discordgo.MessageEmbedField{
 			{
-				Name: config.BotName,
+				Name: botName,
 				Value: strings.Join(commands, ", ") + "\n\n use `" +
-					config.BotPrefix + "help [command]` for more details",
+					botPrefix + "help [command]` for more details",
 			},
 		},
 	})

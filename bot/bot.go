@@ -2,26 +2,39 @@ package bot
 
 import (
 	"fmt"
+	"os"
 	"strconv"
 	"strings"
 
-	"github.com/Tkdefender88/cephBot/config"
 	"github.com/bwmarrin/discordgo"
 )
 
 var (
 	guildMap = new(guilds)
 	//BotID the bot's ID
-	BotID     string
-	goBot     *discordgo.Session
-	juice     = "146276564726841344" //I am the juice
-	greenmen  = "157896922625998848"
-	countChan = "247919139467952128"
+	BotID      string
+	goBot      *discordgo.Session
+	juice      = "146276564726841344" //I am the juice
+	greenmen   = "157896922625998848"
+	countChan  = "247919139467952128"
+	token      string
+	botPrefix  string
+	botName    string
+	embedColor int
+	mentionID  string
 )
+
+func init() {
+	token = os.Getenv("TOKEN")
+	mentionID = "<@398399749192941568> "
+	embedColor = 15662848
+	botPrefix = ">"
+	botName = "Ceph"
+}
 
 //Start starts the bot session
 func Start() (*discordgo.Session, error) {
-	goBot, err := discordgo.New("Bot " + config.Token)
+	goBot, err := discordgo.New("Bot " + token)
 	if err != nil {
 		fmt.Println(err.Error())
 		return nil, err
@@ -66,15 +79,15 @@ func messageCreate(s *discordgo.Session, m *discordgo.MessageCreate) {
 	var prefix string
 	if err != nil {
 		fmt.Println("Could not get the guild details")
-		prefix = config.BotPrefix
+		prefix = botPrefix
 	} else {
 		prefix = guildMap.Server[guild.ID].CommandPrefix
 	}
 	if strings.HasPrefix(m.Content, prefix) {
 		parseCommand(s, m, strings.TrimPrefix(m.Content, prefix))
 	}
-	if strings.HasPrefix(m.Content, config.MentionID) {
-		parseCommand(s, m, strings.TrimPrefix(m.Content, config.MentionID))
+	if strings.HasPrefix(m.Content, mentionID) {
+		parseCommand(s, m, strings.TrimPrefix(m.Content, mentionID))
 	}
 	if m.ChannelID == countChan {
 		i, err := strconv.Atoi(m.Content)
@@ -95,8 +108,8 @@ func guildJoinEvent(s *discordgo.Session, g *discordgo.GuildCreate) {
 	if _, ok := guildMap.Server[g.Guild.ID]; !ok {
 		guildMap.Server[g.Guild.ID] = &guild{
 			GuildID:       g.Guild.ID,
-			CommandPrefix: config.BotPrefix,
-			EmbedColor:    config.EmbedColor,
+			CommandPrefix: botPrefix,
+			EmbedColor:    embedColor,
 			Kicked:        false,
 		}
 		guildMap.Count++

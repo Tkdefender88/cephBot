@@ -10,7 +10,6 @@ import (
 	"regexp"
 	"strings"
 
-	"github.com/Tkdefender88/cephBot/config"
 	"github.com/bwmarrin/discordgo"
 	"github.com/fogleman/gg"
 )
@@ -158,7 +157,7 @@ func sendMeme(s *discordgo.Session, m *discordgo.MessageCreate,
 
 	meme := &discordgo.MessageSend{
 		Embed: &discordgo.MessageEmbed{
-			Color: config.EmbedColor,
+			Color: embedColor,
 			Image: &discordgo.MessageEmbedImage{
 				URL: "attachment://meme.png",
 			},
@@ -227,7 +226,7 @@ func listTemplates(s *discordgo.Session, m *discordgo.MessageCreate) {
 		e := &discordgo.MessageSend{
 			Embed: &discordgo.MessageEmbed{
 				Title: k,
-				Color: config.EmbedColor,
+				Color: embedColor,
 				Image: &discordgo.MessageEmbedImage{
 					URL: "attachment://meme.png",
 				},

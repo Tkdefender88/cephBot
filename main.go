@@ -7,17 +7,9 @@ import (
 	"syscall"
 
 	"github.com/Tkdefender88/cephBot/bot"
-	"github.com/Tkdefender88/cephBot/config"
 )
 
-const token string = ""
-
 func main() {
-	err := config.ReadConfig()
-	if err != nil {
-		fmt.Println(err.Error())
-		return
-	}
 
 	//Start up the bot
 	goBot, err := bot.Start()
