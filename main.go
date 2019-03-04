@@ -1,6 +1,7 @@
 package main
 
 import (
+	"flag"
 	"fmt"
 	"os"
 	"os/signal"
@@ -11,8 +12,11 @@ import (
 
 func main() {
 
+	testing := flag.Bool("test", false, "Runs the bot testCeph.")
+
+	flag.Parse()
 	//Start up the bot
-	goBot, err := bot.Start()
+	goBot, err := bot.Start(*testing)
 	if err != nil {
 		fmt.Println(err.Error())
 		return

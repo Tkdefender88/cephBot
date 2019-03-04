@@ -33,7 +33,12 @@ func init() {
 }
 
 //Start starts the bot session
-func Start() (*discordgo.Session, error) {
+func Start(testing bool) (*discordgo.Session, error) {
+	//set the token
+	if testing {
+		token = os.Getenv("TEST_TOKEN")
+		botPrefix = "<"
+	}
 	goBot, err := discordgo.New("Bot " + token)
 	if err != nil {
 		fmt.Println(err.Error())
