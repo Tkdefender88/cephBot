@@ -1,7 +1,12 @@
 build:
+  languages:
+    - go
   docker:
     image: tkdefender/cephbot:latest
     volumes:
       - json: /$WORKDIR/json
 release:
   image: tkdefender/cephbot:latest
+
+run:
+  web: ceph
