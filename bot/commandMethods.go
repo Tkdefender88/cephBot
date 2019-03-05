@@ -5,6 +5,7 @@ import (
 	"log"
 	"strconv"
 	"strings"
+	"time"
 
 	"github.com/bwmarrin/discordgo"
 )
@@ -23,7 +24,7 @@ func init() {
 	"Requests a feature.").add()*/
 	newCommand("report", 0, false, false, bugReport).setHelp(
 		"Report a bug.").add()
-	newCommand("celebrate", 0, false, false, celebration).setHelp(
+	newCommand("woot", 0, false, false, celebration).setHelp(
 		"Starts a celebration!").add()
 	newCommand("count", 0, true, true, count).add()
 }
@@ -49,10 +50,17 @@ func count(s *discordgo.Session, m *discordgo.MessageCreate, message []string) {
 //and now we have lots more it sees if the message is a ping it pongs and
 //vicea versa
 func ping(s *discordgo.Session, m *discordgo.MessageCreate, message []string) {
+	arrivalTime, err := m.Timestamp.Parse()
+	if err != nil {
+		log.Println(err.Error())
+		return
+	}
 	if message[0] == "ping" {
-		s.ChannelMessageSend(m.ChannelID, "Pong!")
+		s.ChannelMessageSend(m.ChannelID, fmt.Sprintf("Pong! %dms",
+			time.Since(arrivalTime).Nanoseconds()/1000000))
 	} else {
-		s.ChannelMessageSend(m.ChannelID, "Ping!")
+		s.ChannelMessageSend(m.ChannelID, fmt.Sprintf("Ping! %dms",
+			time.Since(arrivalTime).Nanoseconds()/1000000))
 	}
 }
 
