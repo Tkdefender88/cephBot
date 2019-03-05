@@ -1,0 +1,19 @@
+{
+	"comment": "",
+	"ignore": "test",
+	"package": [
+		{
+			"checksumSHA1": "VGLBKlfWfG7sl5kWK2ZJIFuFfkw=",
+			"path": "github.com/bwmarrin/discordgo",
+			"revision": "9ce745633f5df2849c8f03d7e8cd0b1fb6d35001",
+			"revisionTime": "2017-10-10T16:21:53Z"
+		},
+		{
+			"checksumSHA1": "iOBA/vMSK8VQgiWTvaKLdarFXQY=",
+			"path": "github.com/fogleman/gg",
+			"revision": "a9ff18eccd6d57b3c8576a71a91a04868f62078c",
+			"revisionTime": "2018-03-16T14:14:17Z"
+		}
+	],
+	"rootPath": "github.com/Tkdefender88/cephBot"
+}
