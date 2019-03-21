@@ -1,14 +1,14 @@
 # CephBot
   
-  A simple discord bot for use with me and my friends. I'm using this as a project to help me learn and practice the go programming language. Currently the bot can only do a few things I will continue to tacle the feature list below but between school and life I'm not sure how much time or how often this will be updated. I will not be releasing a join link for the bot because I frankly don't have the infrastructure to support the bot on more servers than just the few I have with my friends but if you want you can build the bot on your own machine and run it for your own servers that way.
+  A simple discord bot for personal use with my friends. This project helps me learn and practice the go programming language. Currently, the bot only has a few commands, features listed below will be implemented at a later date, although I do not have much leisure time to work on this project due to my personal education and other life necessities. Join-link will not be available until further implementation of more advanced infrastructures, though this project is open-source, you may download and run the scripts on your own machine.  
 
 ## Things I'll be adding sometime in the Future:
 
-  music playing
+ * Music Playing
 
-  user info
+ * User Info
 
-  twitter updates
+ * Twitter Updates
   
 ## Built with
   
