@@ -6,7 +6,6 @@ import (
 	"fmt"
 	"image"
 	"image/png"
-	"log"
 	"regexp"
 	"strings"
 
@@ -88,9 +87,7 @@ func genMeme(s *discordgo.Session, m *discordgo.MessageCreate,
 	}
 
 	sendMeme(s, m, meme)
-	if err := s.ChannelMessageDelete(m.ChannelID, m.ID); err != nil {
-		log.Println("failed deleting message: ", err)
-	}
+
 }
 
 //Adds text to a meme template
@@ -123,10 +120,12 @@ func addText(t *template, args []string) (image.Image, error) {
 		min = len(args)
 	}
 
+	rplcr := strings.NewReplacer(`\n`, "\n")
+
 	for i := 0; i < min; i++ {
 		tf := t.TextFields[i]
 		context.DrawStringWrapped(
-			args[i],
+			rplcr.Replace(args[i]),
 			tf.X,
 			tf.Y,
 			tf.AX,
