@@ -1,5 +1,7 @@
 #Specify the image to use for the container for the bot
-FROM golang:latest
+FROM golang:alpine3.10
+
+RUN apk add git
 
 #set up environment
 ENV SERVICE_NAME cephBot
