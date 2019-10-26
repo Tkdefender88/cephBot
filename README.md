@@ -1,14 +1,21 @@
 # CephBot
+
+A simple discord bot for personal use with my friends. This project helps me learn and practice the go programming language. Currently, the bot only has a few commands, features listed below will be implemented at a later date, although I do not have much leisure time to work on this project due to my personal education and other life necessities. Join-link will not be available until further implementation of more advanced infrastructures, though this project is open-source, you may download and run the scripts on your own machine.  
   
-  A simple discord bot for personal use with my friends. This project helps me learn and practice the go programming language. Currently, the bot only has a few commands, features listed below will be implemented at a later date, although I do not have much leisure time to work on this project due to my personal education and other life necessities. Join-link will not be available until further implementation of more advanced infrastructures, though this project is open-source, you may download and run the scripts on your own machine.  
+## Features:
+  * Meme generator using common meme templates
+  * Urban dictionary lookup
+  * xkcd comics
+  * leet speak
+  * ping pong
+  * reward stars (reward users for good behavior)
+  * Big emojis
 
-## Things I'll be adding sometime in the Future:
+## Things I'll maybe add sometime in the Future:
 
- * Music Playing
-
- * User Info
-
- * Twitter Updates
+  * user info
+  * twitter updates
+  * possibly some DND releated commands
   
 ## Built with
   
