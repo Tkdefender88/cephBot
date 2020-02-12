@@ -43,7 +43,7 @@ type textField struct {
 
 func init() {
 	newCommand("meme", 0, false, false, genMeme).setHelp(
-		"Args: `[template name] <text1> <text2> ... <textn>` \n\n select a" +
+		"Args: `[template name] \"<text1>\" \"<text2>\" ... \"<textn>\"` \n\n select a" +
 			" template and add text to it to make your own meme!\n\nIf no" +
 			" meme is specified then a list is DMed to you",
 	).add()
@@ -57,8 +57,6 @@ func genMeme(s *discordgo.Session, m *discordgo.MessageCreate,
 	msgList []string) {
 
 	if len(msgList) < 2 {
-		s.ChannelMessageSend(m.ChannelID,
-			"I will send you a list of the templates")
 		listTemplates(s, m)
 		return
 	}
@@ -202,45 +200,22 @@ func getAuthorNick(s *discordgo.Session,
 }
 
 func listTemplates(s *discordgo.Session, m *discordgo.MessageCreate) {
-	dm, err := s.UserChannelCreate(m.Author.ID)
-	if err != nil {
-		s.ChannelMessageSend(m.ChannelID, "Could not open dm with you")
-		fmt.Println("Error opening dm channel: ", err)
+	list := func() (out []string) {
+		for _, v := range templateMap {
+			out = append(out, v.Name)
+		}
 		return
+	}()
+
+	e := &discordgo.MessageSend{
+		Embed: &discordgo.MessageEmbed{
+			Title:       "List of Templates",
+			Color:       embedColor,
+			Description: strings.Join(list, "\n"),
+		},
 	}
 
-	for k, v := range templateMap {
-		meme, err := gg.LoadImage(v.FilePath)
-		if err != nil {
-			fmt.Println("Error loading image: ", err)
-			continue
-		}
-
-		b := &bytes.Buffer{}
-		if err := png.Encode(b, meme); err != nil {
-			fmt.Println("Error ecoding image: ", err)
-			continue
-		}
-
-		e := &discordgo.MessageSend{
-			Embed: &discordgo.MessageEmbed{
-				Title: k,
-				Color: embedColor,
-				Image: &discordgo.MessageEmbedImage{
-					URL: "attachment://meme.png",
-				},
-			},
-			Files: []*discordgo.File{
-				&discordgo.File{
-					Name:        "meme.png",
-					ContentType: "image/png",
-					Reader:      bytes.NewReader(b.Bytes()),
-				},
-			},
-		}
-
-		s.ChannelMessageSendComplex(dm.ID, e)
-	}
+	s.ChannelMessageSendComplex(m.ChannelID, e)
 }
 
 //Gets the meme template from the template map based on the name provided by the
