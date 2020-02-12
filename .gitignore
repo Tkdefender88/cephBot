@@ -1,5 +1,6 @@
 env.list
-.vscode
+.vscode/
+.idea/
 json/
 /emoji
 /memes
