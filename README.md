@@ -1,6 +1,6 @@
 # CephBot
-  
-  A simple discord bot made in Go. This bot is still currently in development and does not have a public join link yet (come back later if you're interested in that). If you desperately want the bot right now you can clone it and host it locally.
+
+A simple discord bot for personal use with my friends. This project helps me learn and practice the go programming language. Currently, the bot only has a few commands, features listed below will be implemented at a later date, although I do not have much leisure time to work on this project due to my personal education and other life necessities. Join-link will not be available until further implementation of more advanced infrastructures, though this project is open-source, you may download and run the scripts on your own machine.  
   
 ## Features:
   * Meme generator using common meme templates

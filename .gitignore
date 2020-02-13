@@ -1,9 +1,6 @@
-env.list
-.vscode/
 .idea/
-json/
-/emoji
-/memes
+.vscode
+json/servers.json
 # Compiled Object files, Static and Dynamic libs (Shared Objects)
 *.o
 *.a
@@ -42,8 +39,6 @@ builds/**/images/*
 *.ogg
 *.mp3
 *.mp4
-*.png
-*.jpeg
 
 # security / ssl
 *.pem
