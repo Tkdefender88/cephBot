@@ -1,0 +1,226 @@
+{
+  "brain": {
+    "Name": "brain",
+    "FilePath": "memes/brain_expand_2.jpg",
+    "NTextBoxes": 2,
+    "FontSize": 48,
+    "TextFields": [
+      {
+        "X": 170,
+        "Y": 100,
+        "AX": 0.5,
+        "AY": 0.5,
+        "Width": 300,
+        "LineSpace": 1.5,
+        "Align": 1
+      },
+      {
+        "X": 170,
+        "Y": 360,
+        "AX": 0.5,
+        "AY": 0.5,
+        "Width": 300,
+        "LineSpace": 1.5,
+        "Align": 1
+      }
+    ],
+    "Wonb": false
+  },
+  "brain3": {
+    "Name": "brain3",
+    "FilePath": "./memes/brain_expand_3.jpg",
+    "NTextBoxes": 3,
+    "FontSize": 48,
+    "TextFields": [
+      {
+        "X": 214,
+        "Y": 150,
+        "AX": 0.5,
+        "AY": 0.5,
+        "Width": 300,
+        "LineSpace": 1.5,
+        "Align": 1
+      },
+      {
+        "X": 214,
+        "Y": 430,
+        "AX": 0.5,
+        "AY": 0.5,
+        "Width": 300,
+        "LineSpace": 1.5,
+        "Align": 1
+      },
+      {
+        "X": 214,
+        "Y": 750,
+        "AX": 0.5,
+        "AY": 0.5,
+        "Width": 300,
+        "LineSpace": 1.5,
+        "Align": 1
+      }
+    ],
+    "Wonb": false
+  },
+  "changemymind": {
+    "Name": "changemymind",
+    "FilePath": "memes/change_my_mind.jpg",
+    "NTextBoxes": 1,
+    "FontSize": 32,
+    "TextFields": [
+      {
+        "X": 320,
+        "Y": 250,
+        "AX": 0.5,
+        "AY": 0.5,
+        "Width": 270,
+        "LineSpace": 1.5,
+        "Align": 1
+      }
+    ],
+    "Wonb": false
+  },
+  "guessim": {
+    "Name": "guessIm",
+    "FilePath": "memes/I_guess_Im.jpg",
+    "NTextBoxes": 0,
+    "FontSize": 36,
+    "TextFields": null,
+    "Wonb": false
+  },
+  "percy": {
+    "Name": "percy",
+    "FilePath": "memes/percy.png",
+    "NTextBoxes": 1,
+    "FontSize": 32,
+    "TextFields": [
+      {
+        "X": 30,
+        "Y": 120,
+        "AX": 0,
+        "AY": 0.5,
+        "Width": 300,
+        "LineSpace": 1.2,
+        "Align": 0
+      }
+    ],
+    "Wonb": true
+  },
+  "pigeon": {
+    "Name": "pigeon",
+    "FilePath": "memes/isthisapigeon.png",
+    "NTextBoxes": 3,
+    "FontSize": 36,
+    "TextFields": [
+      {
+        "X": 380,
+        "Y": 380,
+        "AX": 0.5,
+        "AY": 0.5,
+        "Width": 200,
+        "LineSpace": 1.5,
+        "Align": 0
+      },
+      {
+        "X": 400,
+        "Y": 50,
+        "AX": 0.5,
+        "AY": 0.5,
+        "Width": 200,
+        "LineSpace": 1.5,
+        "Align": 1
+      },
+      {
+        "X": 150,
+        "Y": 100,
+        "AX": 0.5,
+        "AY": 0.5,
+        "Width": 200,
+        "LineSpace": 1.5,
+        "Align": 1
+      }
+    ],
+    "Wonb": true
+  },
+  "rainbowface": {
+    "Name": "rainbowface",
+    "FilePath": "memes/rainbow_face.jpg",
+    "NTextBoxes": 1,
+    "FontSize": 48,
+    "TextFields": [
+      {
+        "X": 450,
+        "Y": 460,
+        "AX": 0.5,
+        "AY": 0.5,
+        "Width": 850,
+        "LineSpace": 1.5,
+        "Align": 1
+      }
+    ],
+    "Wonb": false
+  },
+  "rollsafe": {
+    "Name": "rollsafe",
+    "FilePath": "./memes/roll_safe.jpg",
+    "NTextBoxes": 2,
+    "FontSize": 48,
+    "TextFields": [
+      {
+        "X": 351,
+        "Y": 50,
+        "AX": 0.5,
+        "AY": 0.2,
+        "Width": 600,
+        "LineSpace": 1.5,
+        "Align": 1
+      },
+      {
+        "X": 351,
+        "Y": 345,
+        "AX": 0.5,
+        "AY": 0.9,
+        "Width": 600,
+        "LineSpace": 1.5,
+        "Align": 1
+      }
+    ],
+    "Wonb": true
+  },
+  "tom": {
+    "Name": "tom",
+    "FilePath": "./memes/unsettled_tom.png",
+    "NTextBoxes": 1,
+    "FontSize": 24,
+    "TextFields": [
+      {
+        "X": 282,
+        "Y": 20,
+        "AX": 0.5,
+        "AY": 0.2,
+        "Width": 554,
+        "LineSpace": 1.5,
+        "Align": 0
+      }
+    ],
+    "Wonb": false
+  },
+  "power": {
+    "Name": "power",
+    "FilePath": "./memes/feeling_of_power.jpg",
+    "NTextBoxes": 1,
+    "FontSize": 24,
+    "TextFields": [
+      {
+        "X": 110,
+        "Y": 450,
+        "AX": 0.5,
+        "AY": 0.2,
+        "Width": 200,
+        "LineSpace": 1.5,
+        "Align": 0
+      }
+    ],
+    "Wonb": false
+  }
+}
