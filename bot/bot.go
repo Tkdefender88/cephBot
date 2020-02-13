@@ -2,8 +2,7 @@ package bot
 
 import (
 	"fmt"
-	"os"
-	"strconv"
+	"io/ioutil"
 	"strings"
 
 	"github.com/bwmarrin/discordgo"
@@ -15,9 +14,7 @@ var (
 	BotID      string
 	goBot      *discordgo.Session
 	juice      = "146276564726841344" //I am the juice
-	greenmen   = "157896922625998848"
-	countChan  = "247919139467952128"
-	token      string
+	tokenFile  = "token.tok"
 	botPrefix  string
 	botName    string
 	embedColor int
@@ -25,7 +22,6 @@ var (
 )
 
 func init() {
-	token = os.Getenv("TOKEN")
 	mentionID = "<@398399749192941568> "
 	embedColor = 15662848
 	botPrefix = ">"
@@ -33,26 +29,31 @@ func init() {
 }
 
 //Start starts the bot session
-func Start(testing bool) (*discordgo.Session, error) {
-	//set the token
-	if testing {
-		token = os.Getenv("TEST_TOKEN")
-		botPrefix = "<"
-	}
-	goBot, err := discordgo.New("Bot " + token)
+func Start() (*discordgo.Session, error) {
+
+	//read the token from the token file
+	token, err := ioutil.ReadFile(tokenFile)
 	if err != nil {
-		fmt.Println(err.Error())
 		return nil, err
 	}
+
+	// Open a session with the api
+	goBot, err := discordgo.New("Bot " + string(token))
+	if err != nil {
+		return nil, err
+	}
+
+	// get the bot user ID
 	u, err := goBot.User("@me")
 	if err != nil {
-		fmt.Println(err.Error())
 		return nil, err
 	}
 	BotID = u.ID
+
 	if err := loadServers(); err != nil {
 		fmt.Println("Could not load server information: ", err)
 	}
+
 	goBot.AddHandler(messageCreate)
 	goBot.AddHandler(guildJoinEvent)
 	err = goBot.Open()
@@ -93,13 +94,6 @@ func messageCreate(s *discordgo.Session, m *discordgo.MessageCreate) {
 	}
 	if strings.HasPrefix(m.Content, mentionID) {
 		parseCommand(s, m, strings.TrimPrefix(m.Content, mentionID))
-	}
-	if m.ChannelID == countChan {
-		i, err := strconv.Atoi(m.Content)
-		if err != nil {
-			return
-		}
-		s.ChannelMessageSend(m.ChannelID, strconv.Itoa(i+1))
 	}
 }
 

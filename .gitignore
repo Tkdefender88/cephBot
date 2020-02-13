@@ -8,6 +8,7 @@ json/
 *.a
 *.so
 ceph
+*.tok
 
 #docker compose
 docker-compose.yml
