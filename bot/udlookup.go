@@ -25,7 +25,6 @@ type result struct {
 		Thumbup    int    `json:"thumbs_up"`
 		Thumbdown  int    `json:"thumbs_down"`
 	} `json:"list"`
-	ResultType string `json:"result_type"`
 }
 
 func init() {
@@ -56,12 +55,14 @@ func udLookup(s *discordgo.Session, m *discordgo.MessageCreate,
 	lookupInfo := searchUD(url)
 	//Parse the json data for definition author rating and example
 	res, err := parseJSONData(lookupInfo)
+
 	if err != nil {
 		fmt.Println(err.Error())
 		return
 	}
+
 	//If no result is found then send an error message to chat and stop.
-	if res.ResultType == "no_results" {
+	if len(res.LookupList) == 0 {
 		s.ChannelMessageSendEmbed(m.ChannelID, &discordgo.MessageEmbed{
 			Color: embedColor,
 
@@ -74,6 +75,7 @@ func udLookup(s *discordgo.Session, m *discordgo.MessageCreate,
 		})
 		return
 	}
+
 	if len(res.LookupList[0].Definition) > 1024 {
 		s.ChannelMessageSendEmbed(m.ChannelID, &discordgo.MessageEmbed{
 			Color: embedColor,
