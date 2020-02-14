@@ -60,7 +60,12 @@ func parseCommand(s *discordgo.Session, m *discordgo.MessageCreate,
 	}
 	//white separate the message to pick out the command parts
 	msgList := strings.Fields(msg)
-	commandName := msgList[0]
+	commandName := func() string {
+		if strings.HasPrefix(msgList[0], " ") {
+			return " " + msgList[0]
+		}
+		return msgList[0]
+	}()
 
 	if command, ok := commandMap[commandName]; ok &&
 		commandName == strings.ToLower(command.Name) {
