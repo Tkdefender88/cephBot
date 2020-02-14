@@ -92,7 +92,6 @@ func messageCreate(s *discordgo.Session, m *discordgo.MessageCreate) {
 	if strings.HasPrefix(m.Content, prefix) {
 		parseCommand(s, m, strings.TrimPrefix(m.Content, prefix))
 	}
-	fmt.Println(mentionID)
 	if strings.HasPrefix(m.Content, mentionID) {
 		parseCommand(s, m, strings.TrimPrefix(m.Content, mentionID))
 	}
